@@ -138,6 +138,14 @@ O relatório do ZAP será gerado em `reports/zap-report.html`.
 
 ## Resultados dos testes
 
+### Visão geral consolidada
+
+![Todos os testes passando](imagens/all-tests-passing.png)
+
+*Relatório completo do Playwright com todos os testes (API, UI e segurança) passando.*
+
+---
+
 ### Testes de API (Serverest)
 
 ![Testes de API passando](imagens/api-tests-passing.png)
@@ -146,14 +154,13 @@ O relatório do ZAP será gerado em `reports/zap-report.html`.
 
 ![Testes de UI passando](imagens/ui-tests-passing.png)
 
-### Testes de segurança ativos (injeção, auth, headers)
+### Testes de segurança ativos
 
 ![Testes de segurança passando](imagens/security-tests-passing.png)
 
 ### Pipeline CI/CD no GitHub Actions
 
 ![Pipeline verde no GitHub Actions](imagens/pipeline-passing.png)
-
 ---
 
 ## Pipeline CI/CD
