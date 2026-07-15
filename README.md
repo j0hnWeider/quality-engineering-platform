@@ -2,8 +2,8 @@
 # Quality Engineering Platform
 
 Framework de automação para testes de API, interface, performance e segurança, integrado a um pipeline CI/CD.
-
-O projeto foi desenvolvido como parte de um portfólio para demonstrar competências em engenharia de qualidade, com ênfase em boas práticas de automação, rastreabilidade e entrega contínua.
+O projeto foi desenvolvido como parte de um portfólio para demonstrar competências em engenharia de qualidade,
+com ênfase em boas práticas de automação, rastreabilidade e entrega contínua.
 
 O sistema sob teste é a API pública Serverest, mas a arquitetura do framework foi pensada para ser adaptável a diferentes aplicações.
 
