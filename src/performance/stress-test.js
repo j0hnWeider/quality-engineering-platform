@@ -8,27 +8,16 @@ export const options = {
     { duration: '1m', target: 60 },
     { duration: '1m', target: 0 },
   ],
-  // Thresholds desabilitados para evitar falhas em APIs públicas
-  // Em um ambiente real, reativar com valores adequados ao SLA
-  thresholds: {},
+  thresholds: {
+    http_req_duration: ['p(95)<2000'],
+  },
 };
 
 export default function () {
-  const payload = JSON.stringify({
-    email: 'johnqateste@gmail.com',
-    password: 'john123',
-  });
-
-  const params = {
-    headers: { 'Content-Type': 'application/json' },
-  };
-
-  const res = http.post('https://serverest.dev/login', payload, params);
-  
+  const res = http.get('https://www.saucedemo.com');
   check(res, {
     'status é 200': (r) => r.status === 200,
-    'tempo de resposta < 300ms': (r) => r.timings.duration < 300,
+    'tempo de resposta < 500ms': (r) => r.timings.duration < 500,
   });
-
   sleep(1);
 }

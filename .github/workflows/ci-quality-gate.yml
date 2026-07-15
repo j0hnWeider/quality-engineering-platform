@@ -1,4 +1,4 @@
-name: 🛡️ Quality Gate Pipeline
+name: Quality Gate Pipeline
 
 on:
   push:
@@ -23,22 +23,15 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Install k6 (performance testing)
-        run: |
-          sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D69
-          echo "deb https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
-          sudo apt-get update
-          sudo apt-get install k6
-
       - name: Run API Tests
         run: npm run test:api
         env:
-          BASE_URL: https://serverest.dev
+          API_BASE_URL: https://serverest.dev
 
       - name: Run UI Tests
         run: npm run test:ui
         env:
-          UI_BASE_URL: https://front.serverest.dev
+          UI_BASE_URL: https://www.saucedemo.com
 
       - name: Performance Smoke Test (k6)
         run: npm run test:perf

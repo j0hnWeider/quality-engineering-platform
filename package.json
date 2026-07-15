@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "Framework de automação de testes com foco em engenharia de qualidade",
   "scripts": {
-    "test:api": "npx playwright test --project=api",
-    "test:ui": "npx playwright test --project=ui",
-    "test:all": "npx playwright test",
-    "test:perf": "k6 run src/performance/stress-test.js",
-    "test:security": "bash src/security/zap-baseline-scan.sh",
-    "pretest": "npx playwright install"
-  },
+  "test:api": "npx playwright test --project=api",
+  "test:ui": "npx playwright test --project=ui",
+  "test:all": "npx playwright test",
+  "test:perf": "k6 run src/performance/stress-test.js",
+  "test:zap": "bash src/security/zap-baseline-scan.sh",
+  "pretest": "npx playwright install"
+},
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "@playwright/test": "^1.42.0",

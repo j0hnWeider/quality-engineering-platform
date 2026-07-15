@@ -19,25 +19,25 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
   projects: [
-  {
-    name: 'api',
-    testMatch: /api\/.*\.spec\.ts/,   // só arquivos dentro de src/api/
-    use: {
-      ...devices['Desktop Chrome'],
-      baseURL: process.env.BASE_URL || 'https://serverest.dev',
-      extraHTTPHeaders: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
+    {
+      name: 'api',
+      testMatch: /api\/.*\.spec\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: process.env.API_BASE_URL || 'https://serverest.dev',
+        extraHTTPHeaders: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
       },
     },
-  },
-  {
-    name: 'ui',
-    testMatch: /ui\/.*\.spec\.ts/,   // só arquivos dentro de src/ui/
-    use: {
-      ...devices['Desktop Chrome'],
-      baseURL: process.env.UI_BASE_URL || 'https://front.serverest.dev',
+    {
+      name: 'ui',
+      testMatch: /ui\/.*\.spec\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: process.env.UI_BASE_URL || 'https://www.saucedemo.com',
+      },
     },
-  },
-],
+  ],
 });

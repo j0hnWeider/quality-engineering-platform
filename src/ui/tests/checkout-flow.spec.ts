@@ -1,70 +1,37 @@
 /**
- * Teste de UI - Fluxo de login com criação dinâmica de conta
+ * Teste de UI - Fluxo de login no SauceDemo
  * 
- * Objetivo: validar que um usuário administrador consegue fazer login
- * e é redirecionado para a página correta.
+ * Objetivo: validar que um usuário padrão consegue fazer login
+ * e acessar a página de inventário.
+ * 
+ * Credenciais padrão do SauceDemo: standard_user / secret_sauce
  */
 
-import { test, expect, APIRequestContext } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { faker } from '@faker-js/faker';
+import { test, expect } from '@playwright/test';
 
-let apiContext: APIRequestContext;
-let testEmail: string;
-let testPassword: string;
+test.describe('Fluxo de Login - SauceDemo', () => {
 
-test.describe('Fluxo de Compra - UI', () => {
-  test.beforeAll(async ({ playwright }) => {
-    // Cria contexto de API para criar a conta
-    apiContext = await playwright.request.newContext({
-      baseURL: process.env.BASE_URL || 'https://serverest.dev',
-      extraHTTPHeaders: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
+  test('CT-UI-01: Usuario deve fazer login e ver lista de produtos', async ({ page }) => {
+    test.setTimeout(30000);
 
-    // Gera credenciais únicas
-    testEmail = `qa_ui_${faker.string.alphanumeric(8)}@teste.com`;
-    testPassword = '123456';
+    // Acessa a URL do SauceDemo diretamente
+    await page.goto('https://www.saucedemo.com');
 
-    // Cria conta administradora
-    const createUserResponse = await apiContext.post('/usuarios', {
-      data: {
-        nome: 'QA UI Automacao',
-        email: testEmail,
-        password: testPassword,
-        administrador: 'true',
-      },
-    });
+    // Verifica que a página de login carregou (campo de usuário visível)
+    await expect(page.locator('#user-name')).toBeVisible({ timeout: 5000 });
 
-    if (createUserResponse.status() !== 201) {
-      console.warn(`Falha ao criar usuário: ${createUserResponse.status()}`);
-      // Fallback para credenciais conhecidas
-      testEmail = 'johnqateste@gmail.com';
-      testPassword = 'john123';
-    } else {
-      console.log(`✅ Conta criada: ${testEmail}`);
-    }
-  });
+    // Preenche as credenciais padrão
+    await page.fill('#user-name', 'standard_user');
+    await page.fill('#password', 'secret_sauce');
+    await page.click('#login-button');
 
-  test.afterAll(async () => {
-    await apiContext.dispose();
-  });
+    // Aguarda o redirecionamento para a página de inventário
+    await page.waitForURL(/.*inventory.html/, { timeout: 10000 });
 
-  test('CT-UI-01: Usuário deve fazer login e ver lista de produtos', async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    
-    // Acessa a página de login
-    await loginPage.goto();
+    // Valida que o título da página contém "Products"
+    await expect(page.locator('.title')).toContainText('Products', { timeout: 5000 });
 
-    // Realiza login com as credenciais criadas
-    await loginPage.login(testEmail, testPassword);
-
-    // Aguarda o redirecionamento para a página administrativa
-    await page.waitForURL(/.*admin.*|.*produtos.*/, { timeout: 15000 });
-
-    // Validação: o título da página deve conter "Bem Vindo" (para administradores)
-    await expect(page.locator('h1')).toContainText('Bem Vindo', { timeout: 10000 });
+    // Valida que o carrinho de compras está visível
+    await expect(page.locator('.shopping_cart_link')).toBeVisible({ timeout: 5000 });
   });
 });
