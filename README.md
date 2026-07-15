@@ -1,16 +1,32 @@
 ```markdown
 # Quality Engineering Platform
 
-Framework de automação de testes para API, interface e segurança, com pipeline CI/CD integrado.
+Framework de automação de testes com arquitetura híbrida, abrangendo API, interface, performance e segurança, com pipeline CI/CD integrado.
 
-Projeto criado para demonstrar competências em engenharia de qualidade, com foco em **automação robusta**, **rastreabilidade** e **entrega contínua**. O sistema sob teste é a API pública **Serverest**, mas a arquitetura foi pensada para ser adaptável a qualquer aplicação.
+Projeto criado para demonstrar competências em engenharia de qualidade, com foco em **automação robusta**, **rastreabilidade** e **entrega contínua**. A arquitetura utiliza duas plataformas distintas para maximizar a estabilidade e a cobertura de testes.
+
+---
+
+## Arquitetura de testes híbrida
+
+O projeto utiliza duas plataformas distintas, cada uma escolhida por sua estabilidade e adequação ao tipo de teste:
+
+| Categoria | Plataforma | Motivo |
+|-----------|------------|--------|
+| **Testes de API** | [Serverest](https://serverest.dev) | API pública com endpoints reais para testar contrato, autenticação, autorização e injeção. |
+| **Testes de UI** | [SauceDemo](https://www.saucedemo.com) | Aplicação web estável, amplamente utilizada pela indústria para treinamentos e demos. |
+| **Performance (k6)** | [SauceDemo](https://www.saucedemo.com) | Teste de carregamento de página e recursos estáticos. |
+| **Segurança (OWASP ZAP)** | [SauceDemo](https://www.saucedemo.com) | Varredura passiva em aplicação web confiável. |
+
+Essa abordagem demonstra capacidade de adaptação a diferentes sistemas e contextos, além de garantir testes mais confiáveis e com menor flakiness.
 
 ---
 
 ## Visão geral
 
-- **Testes de API** com validação de contrato e cenários de segurança (acesso não autorizado).
-- **Testes de interface** com Page Objects e fluxo de login.
+- **Testes de API** com validação de contrato, autenticação, autorização e cenários de injeção (SQL, XSS, Path Traversal).
+- **Testes de interface** com Page Objects e fluxo de login (SauceDemo).
+- **Testes de performance** com k6, com limiares de tempo de resposta.
 - **Varredura de segurança** passiva com OWASP ZAP, integrada ao pipeline.
 - **Pipeline CI/CD** automatizado no GitHub Actions, executado a cada push na branch `main`.
 - **Geração de relatórios** HTML do Playwright e ZAP.
@@ -21,10 +37,11 @@ Projeto criado para demonstrar competências em engenharia de qualidade, com foc
 
 - **TypeScript** – tipagem estática e melhor manutenção.
 - **Playwright** – orquestrador unificado para testes de API e UI.
+- **k6** – testes de performance.
 - **OWASP ZAP** – scanner de segurança passivo.
 - **GitHub Actions** – pipeline de integração contínua.
 - **Docker** – execução do ZAP no pipeline.
-```
+
 ---
 
 ## Estrutura do projeto
@@ -32,15 +49,20 @@ Projeto criado para demonstrar competências em engenharia de qualidade, com foc
 ```
 src/
   api/
-    client/           # Cliente HTTP reutilizável
-    tests/            # Specs de API
+    client/           # Cliente HTTP reutilizável (Serverest)
+    tests/            # Specs de API (Serverest)
+      products.spec.ts           # CRUD e validação de contrato
+      security-injection.spec.ts # SQL, XSS, Path Traversal
+      security-auth.spec.ts      # Autenticação e autorização
+      security-headers.spec.ts   # Cabeçalhos de segurança
   ui/
-    pages/            # Page Objects
-    tests/            # Specs de UI
-  security/           # Scripts ZAP
+    pages/            # Page Objects (SauceDemo)
+    tests/            # Specs de UI (SauceDemo)
+  performance/        # Scripts k6 (SauceDemo)
+  security/           # Scripts para OWASP ZAP (SauceDemo)
   utils/              # Funções auxiliares
 reports/              # Relatórios gerados
-images/               # Prints dos resultados
+imagens/              # Prints dos resultados
 .github/workflows/    # Pipeline CI/CD
 ```
 
@@ -51,6 +73,7 @@ images/               # Prints dos resultados
 - Node.js (v18 ou superior)
 - npm ou yarn
 - Playwright (`npx playwright install`)
+- k6 (para execução local) – [instalação](https://k6.io/docs/get-started/installation/)
 - Docker (para execução do ZAP local ou no pipeline)
 
 ---
@@ -84,22 +107,28 @@ cp .env.example .env
 npm run test:all
 ```
 
-5. Execute apenas os testes de API:
+5. Execute apenas os testes de API (Serverest):
 
 ```bash
 npm run test:api
 ```
 
-6. Execute apenas os testes de UI:
+6. Execute apenas os testes de UI (SauceDemo):
 
 ```bash
 npm run test:ui
 ```
 
-7. Execute o scan de segurança (requer Docker):
+7. Execute o teste de performance (k6):
 
 ```bash
-npm run test:security
+npm run test:perf
+```
+
+8. Execute o scan de segurança (requer Docker):
+
+```bash
+npm run test:zap
 ```
 
 O relatório do ZAP será gerado em `reports/zap-report.html`.
@@ -108,13 +137,17 @@ O relatório do ZAP será gerado em `reports/zap-report.html`.
 
 ## Resultados dos testes
 
-### Testes de API
+### Testes de API (Serverest)
 
 ![Testes de API passando](imagens/api-tests-passing.png)
 
-### Testes de UI
+### Testes de UI (SauceDemo)
 
 ![Testes de UI passando](imagens/ui-tests-passing.png)
+
+### Testes de performance (k6)
+
+![Testes de performance passando](imagens/performance-tests-passing.png)
 
 ### Pipeline CI/CD no GitHub Actions
 
@@ -128,12 +161,14 @@ O pipeline definido em `.github/workflows/ci-quality-gate.yml` executa as seguin
 
 - Instalação de dependências (`npm ci`)
 - Instalação dos navegadores do Playwright
-- Testes de API
-- Testes de UI
-- Scan de segurança com ZAP
+- Testes de API (Serverest)
+- Testes de UI (SauceDemo)
+- Teste de performance (k6)
+- Scan de segurança passivo (OWASP ZAP)
 
 **O pipeline falha** caso:
 - Algum teste funcional (API ou UI) falhe.
+- O limiar de performance seja violado.
 - O ZAP identifique vulnerabilidades de nível "Alta".
 
 ---
@@ -143,7 +178,8 @@ O pipeline definido em `.github/workflows/ci-quality-gate.yml` executa as seguin
 - **Playwright**: escolhido por oferecer uma API unificada para testes de API e UI, reduzindo a complexidade e o número de ferramentas.
 - **TypeScript**: adotado para garantir segurança de tipos, facilitar a refatoração e melhorar a experiência de desenvolvimento.
 - **ZAP em modo baseline**: adotado como camada inicial de segurança, sem gerar tráfego ofensivo, analisando apenas respostas para vulnerabilidades conhecidas.
-- **Criação dinâmica de usuários**: os testes de API e UI criam contas administradoras automaticamente via API, garantindo autossuficiência e eliminando dependência de credenciais externas.
+- **Arquitetura híbrida**: utilização de duas plataformas distintas (Serverest para API, SauceDemo para UI/performance/segurança) para garantir estabilidade e cobertura abrangente.
+- **Criação dinâmica de usuários**: nos testes de API, contas administradoras são criadas automaticamente via API, garantindo autossuficiência e eliminando dependência de credenciais externas.
 
 ---
 
@@ -166,4 +202,4 @@ Graduação em Defesa Cibernética
 E-mail: zeus.programador@gmail.com
 ```
 
-
+---
