@@ -1,38 +1,35 @@
 ```markdown
 # Quality Engineering Platform
 
-Framework de automação para testes de API, interface, performance e segurança, integrado a um pipeline CI/CD.
-O projeto foi desenvolvido como parte de um portfólio para demonstrar competências em engenharia de qualidade,
-com ênfase em boas práticas de automação, rastreabilidade e entrega contínua.
+Framework de automação de testes para API, interface e segurança, com pipeline CI/CD integrado.
 
-O sistema sob teste é a API pública Serverest, mas a arquitetura do framework foi pensada para ser adaptável a diferentes aplicações.
+Projeto criado para demonstrar competências em engenharia de qualidade, com foco em **automação robusta**, **rastreabilidade** e **entrega contínua**. O sistema sob teste é a API pública **Serverest**, mas a arquitetura foi pensada para ser adaptável a qualquer aplicação.
 
 ---
 
-## Escopo
+## Visão geral
 
-- Testes de API com validação de contrato (schema) e cenários de segurança (acesso não autorizado)
-- Testes end-to-end de interface com Page Objects
-- Testes de performance com k6 e limiares de SLA
-- Varredura de segurança passiva com OWASP ZAP
-- Pipeline automatizado no GitHub Actions
-- Relatórios com Allure (testes funcionais) e HTML (ZAP)
+- **Testes de API** com validação de contrato e cenários de segurança (acesso não autorizado).
+- **Testes de interface** com Page Objects e fluxo de login.
+- **Varredura de segurança** passiva com OWASP ZAP, integrada ao pipeline.
+- **Pipeline CI/CD** automatizado no GitHub Actions, executado a cada push na branch `main`.
+- **Geração de relatórios** HTML do Playwright e ZAP.
 
 ---
 
-## Tecnologias
+## Tecnologias utilizadas
 
-- TypeScript
-- Playwright (API + UI)
-- k6
-- OWASP ZAP
-- GitHub Actions
-- Allure
-- Docker
-```
-## Estrutura de diretórios
-```
+- **TypeScript** – tipagem estática e melhor manutenção.
+- **Playwright** – orquestrador unificado para testes de API e UI.
+- **OWASP ZAP** – scanner de segurança passivo.
+- **GitHub Actions** – pipeline de integração contínua.
+- **Docker** – execução do ZAP no pipeline.
 
+---
+
+## Estrutura do projeto
+
+```
 src/
   api/
     client/           # Cliente HTTP reutilizável
@@ -40,13 +37,23 @@ src/
   ui/
     pages/            # Page Objects
     tests/            # Specs de UI
-  performance/        # Scripts k6
   security/           # Scripts ZAP
   utils/              # Funções auxiliares
 reports/              # Relatórios gerados
-.github/workflows/    # Pipeline CI
+images/               # Prints dos resultados
+.github/workflows/    # Pipeline CI/CD
 ```
 
+---
+
+## Pré-requisitos
+
+- Node.js (v18 ou superior)
+- npm ou yarn
+- Playwright (`npx playwright install`)
+- Docker (para execução do ZAP local ou no pipeline)
+
+---
 
 ## Como executar localmente
 
@@ -64,7 +71,7 @@ npm install
 npx playwright install
 ```
 
-3. (Opcional) Configure as variáveis de ambiente:
+3. Configure as variáveis de ambiente (opcional):
 
 ```bash
 cp .env.example .env
@@ -89,13 +96,7 @@ npm run test:api
 npm run test:ui
 ```
 
-7. Execute o teste de performance (requer k6 instalado):
-
-```bash
-npm run test:perf
-```
-
-8. Execute o scan de segurança (requer Docker):
+7. Execute o scan de segurança (requer Docker):
 
 ```bash
 npm run test:security
@@ -105,39 +106,53 @@ O relatório do ZAP será gerado em `reports/zap-report.html`.
 
 ---
 
+## Resultados dos testes
+
+### Testes de API
+
+![Testes de API passando](images/api-tests-passing.png)
+
+### Testes de UI
+
+![Testes de UI passando](images/ui-tests-passing.png)
+
+### Pipeline CI/CD no GitHub Actions
+
+![Pipeline verde no GitHub Actions](images/pipeline-passing.png)
+
+---
+
 ## Pipeline CI/CD
 
 O pipeline definido em `.github/workflows/ci-quality-gate.yml` executa as seguintes etapas em cada push ou pull request para a branch `main`:
 
-- Instalação de dependências
+- Instalação de dependências (`npm ci`)
+- Instalação dos navegadores do Playwright
 - Testes de API
 - Testes de UI
-- Geração do relatório Allure
-- Teste de performance com k6
 - Scan de segurança com ZAP
 
-O pipeline é interrompido (falha) caso:
-- Algum teste funcional falhe
-- Os limiares de performance sejam violados (p95 > 500ms ou taxa de erro > 1%)
-- O ZAP identifique vulnerabilidades de nível "Alta"
+**O pipeline falha** caso:
+- Algum teste funcional (API ou UI) falhe.
+- O ZAP identifique vulnerabilidades de nível "Alta".
 
 ---
 
 ## Decisões técnicas
 
-- **Playwright**: escolhido por oferecer uma API unificada para testes de API e UI, reduzindo a complexidade e o número de ferramentas no projeto.
-- **TypeScript**: adotado para garantir segurança de tipos e facilitar a manutenção e refatoração.
-- **k6**: utilizado por sua leveza, facilidade de integração com pipelines e suporte nativo a execução em containers.
-- **ZAP em modo baseline**: adotado como camada inicial de segurança, sem gerar tráfego ofensivo, apenas analisando respostas para vulnerabilidades conhecidas.
+- **Playwright**: escolhido por oferecer uma API unificada para testes de API e UI, reduzindo a complexidade e o número de ferramentas.
+- **TypeScript**: adotado para garantir segurança de tipos, facilitar a refatoração e melhorar a experiência de desenvolvimento.
+- **ZAP em modo baseline**: adotado como camada inicial de segurança, sem gerar tráfego ofensivo, analisando apenas respostas para vulnerabilidades conhecidas.
+- **Criação dinâmica de usuários**: os testes de API e UI criam contas administradoras automaticamente via API, garantindo autossuficiência e eliminando dependência de credenciais externas.
 
 ---
 
-## Próximos passos
+## Próximos passos (roadmap)
 
-- Testes de contrato com Pact (consumer-driven)
-- Testes de acessibilidade com axe-core
-- Dashboard com métricas históricas de performance
-- Parametrização da URL base para diferentes ambientes (dev, staging, produção)
+- [ ] Testes de contrato com Pact (consumer-driven)
+- [ ] Testes de acessibilidade com axe-core
+- [ ] Dashboard com métricas históricas
+- [ ] Parametrização da URL base para diferentes ambientes (dev, staging, produção)
 
 ---
 
@@ -147,6 +162,8 @@ O pipeline é interrompido (falha) caso:
 Pós-graduado em Engenharia de Software  
 Graduação em Defesa Cibernética
 
-LinkedIn: [https://www.linkedin.com/in/john-weider-98bb041b2/](https://www.linkedin.com/in/john-weider-98bb041b2/)  
+[LinkedIn](https://www.linkedin.com/in/john-weider-98bb041b2/)  
 E-mail: zeus.programador@gmail.com
 ```
+
+
