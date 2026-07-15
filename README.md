@@ -29,12 +29,10 @@ O sistema sob teste é a API pública Serverest, mas a arquitetura do framework 
 - GitHub Actions
 - Allure
 - Docker
-
----
-
+```
 ## Estrutura de diretórios
 
-```
+
 src/
   api/
     client/           # Cliente HTTP reutilizável
