@@ -10,17 +10,37 @@ Projeto criado para demonstrar competências em engenharia de qualidade, com foc
 
 ## Arquitetura de testes híbrida
 
-O projeto utiliza duas plataformas distintas, cada uma escolhida por sua estabilidade e adequação ao tipo de teste:
+O projeto utiliza duas plataformas distintas, cada uma escolhida por sua estabilidade e adequação ao tipo de teste.
 
-| Categoria | Plataforma | Motivo |
-|-----------|------------|--------|
-| **Testes de API** | [Serverest](https://serverest.dev) | API real para contrato, auth e injeção. |
-| **Testes de UI** | [SauceDemo](https://www.saucedemo.com) | UI estável para fluxos de compra. |
-| **Performance** | [SauceDemo](https://www.saucedemo.com) | Teste de carga e recursos estáticos. |
-| **Segurança** | [SauceDemo](https://www.saucedemo.com) | Varredura passiva com OWASP ZAP. |
+<table>
+  <tr>
+    <th>Categoria</th>
+    <th>Plataforma</th>
+    <th>Motivo</th>
+  </tr>
+  <tr>
+    <td><strong>Testes de API</strong></td>
+    <td><a href="https://serverest.dev">Serverest</a></td>
+    <td>API real para contrato, auth e injeção.</td>
+  </tr>
+  <tr>
+    <td><strong>Testes de UI</strong></td>
+    <td><a href="https://www.saucedemo.com">SauceDemo</a></td>
+    <td>UI estável para fluxos de compra.</td>
+  </tr>
+  <tr>
+    <td><strong>Performance</strong></td>
+    <td><a href="https://www.saucedemo.com">SauceDemo</a></td>
+    <td>Teste de carga e recursos estáticos.</td>
+  </tr>
+  <tr>
+    <td><strong>Segurança</strong></td>
+    <td><a href="https://www.saucedemo.com">SauceDemo</a></td>
+    <td>Varredura passiva com OWASP ZAP.</td>
+  </tr>
+</table>
 
 Essa abordagem demonstra adaptação a diferentes sistemas e garante testes mais confiáveis e com menor flakiness.
-
 ---
 
 ## Visão geral
