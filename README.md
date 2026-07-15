@@ -14,10 +14,10 @@ O projeto utiliza duas plataformas distintas, cada uma escolhida por sua estabil
 
 | Categoria | Plataforma | Motivo |
 |-----------|------------|--------|
-| **Testes de API** | [Serverest](https://serverest.dev) | API real para contrato, auth e injeção. |
-| **Testes de UI** | [SauceDemo](https://www.saucedemo.com) | UI estável para fluxos de compra. |
-| **Performance** | [SauceDemo](https://www.saucedemo.com) | Teste de carga e recursos estáticos. |
-| **Segurança** | [SauceDemo](https://www.saucedemo.com) | Varredura passiva com OWASP ZAP. |
+| *Testes de API* | [Serverest](https://serverest.dev) | API real para contrato, auth e injeção. |
+| *Testes de UI* | [SauceDemo](https://www.saucedemo.com) | UI estável para fluxos de compra. |
+| *Performance* | [SauceDemo](https://www.saucedemo.com) | Teste de carga e recursos estáticos. |
+| *Segurança* | [SauceDemo](https://www.saucedemo.com) | Varredura passiva com OWASP ZAP. |
 
 Essa abordagem demonstra adaptação a diferentes sistemas e garante testes mais confiáveis e com menor flakiness.
 ---
