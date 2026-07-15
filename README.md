@@ -48,8 +48,7 @@ src/
 reports/              # Relatórios gerados
 .github/workflows/    # Pipeline CI
 ```
-
----
+```
 
 ## Como executar localmente
 
