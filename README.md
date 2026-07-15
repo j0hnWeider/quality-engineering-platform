@@ -1,3 +1,4 @@
+
 ```markdown
 # Quality Engineering Platform
 
@@ -75,7 +76,7 @@ imagens/              # Prints dos resultados
 - Playwright (`npx playwright install`)
 - k6 (para execução local) – [instalação](https://k6.io/docs/get-started/installation/)
 - Docker (para execução do ZAP local ou no pipeline)
-
+```
 ---
 
 ## Como executar localmente
@@ -145,9 +146,9 @@ O relatório do ZAP será gerado em `reports/zap-report.html`.
 
 ![Testes de UI passando](imagens/ui-tests-passing.png)
 
-### Testes de performance (k6)
+### Testes de segurança ativos (injeção, auth, headers)
 
-![Testes de performance passando](imagens/performance-tests-passing.png)
+![Testes de segurança passando](imagens/security-tests-passing.png)
 
 ### Pipeline CI/CD no GitHub Actions
 
@@ -161,6 +162,7 @@ O pipeline definido em `.github/workflows/ci-quality-gate.yml` executa as seguin
 
 - Instalação de dependências (`npm ci`)
 - Instalação dos navegadores do Playwright
+- Instalação do k6 (para testes de performance)
 - Testes de API (Serverest)
 - Testes de UI (SauceDemo)
 - Teste de performance (k6)
@@ -202,4 +204,3 @@ Graduação em Defesa Cibernética
 E-mail: zeus.programador@gmail.com
 ```
 
----
