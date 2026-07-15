@@ -1,0 +1,70 @@
+# Instructions
+
+- Following Playwright test failed.
+- Explain why, be concise, respect Playwright best practices.
+- Provide a snippet of code with the fix, if possible.
+
+# Test info
+
+- Name: api\tests\products.spec.ts >> API - Produtos (Contratos e Segurança) >> CT-API-01: Deve listar produtos com schema válido
+- Location: src\api\tests\products.spec.ts:15:7
+
+# Error details
+
+```
+Error: apiRequestContext.get: Fixture { request } from beforeAll cannot be reused in a test.
+  - Recommended fix: use a separate { request } in the test.
+  - Alternatively, manually create APIRequestContext in beforeAll and dispose it in afterAll.
+See https://playwright.dev/docs/api-testing#sending-api-requests-from-ui-tests for more details.
+```
+
+# Test source
+
+```ts
+  1  | import { APIRequestContext, APIResponse } from '@playwright/test';
+  2  | 
+  3  | export class ApiClient {
+  4  |   private request: APIRequestContext;
+  5  |   private baseURL: string;
+  6  |   private token: string | null = null;
+  7  | 
+  8  |   constructor(request: APIRequestContext, baseURL: string) {
+  9  |     this.request = request;
+  10 |     this.baseURL = baseURL;
+  11 |   }
+  12 | 
+  13 |   async login(email: string, password: string): Promise<string> {
+  14 |     const response = await this.request.post(`${this.baseURL}/login`, {
+  15 |       data: { email, password },
+  16 |     });
+  17 |     const body = await response.json();
+  18 |     this.token = body.authorization;
+  19 |     return this.token;
+  20 |   }
+  21 | 
+  22 |   async get(endpoint: string, auth: boolean = false): Promise<APIResponse> {
+  23 |     const headers: Record<string, string> = {};
+  24 |     if (auth && this.token) {
+  25 |       headers['Authorization'] = `Bearer ${this.token}`;
+  26 |     }
+> 27 |     return await this.request.get(`${this.baseURL}${endpoint}`, { headers });
+     |                               ^ Error: apiRequestContext.get: Fixture { request } from beforeAll cannot be reused in a test.
+  28 |   }
+  29 | 
+  30 |   async post(endpoint: string, data: any, auth: boolean = false): Promise<APIResponse> {
+  31 |     const headers: Record<string, string> = {};
+  32 |     if (auth && this.token) {
+  33 |       headers['Authorization'] = `Bearer ${this.token}`;
+  34 |     }
+  35 |     return await this.request.post(`${this.baseURL}${endpoint}`, { data, headers });
+  36 |   }
+  37 | 
+  38 |   async delete(endpoint: string, auth: boolean = false): Promise<APIResponse> {
+  39 |     const headers: Record<string, string> = {};
+  40 |     if (auth && this.token) {
+  41 |       headers['Authorization'] = `Bearer ${this.token}`;
+  42 |     }
+  43 |     return await this.request.delete(`${this.baseURL}${endpoint}`, { headers });
+  44 |   }
+  45 | }
+```

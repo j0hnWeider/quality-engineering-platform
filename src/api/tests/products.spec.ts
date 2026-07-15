@@ -1,15 +1,26 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, APIRequestContext } from '@playwright/test';
 import { ApiClient } from '../client/ApiClient';
 import { faker } from '@faker-js/faker';
 
+let apiContext: APIRequestContext;
 let client: ApiClient;
-let authToken: string;
 
 test.describe('API - Produtos (Contratos e Segurança)', () => {
-  test.beforeAll(async ({ request }) => {
-    const baseURL = process.env.BASE_URL || 'https://serverest.dev';
-    client = new ApiClient(request, baseURL);
-    authToken = await client.login('admin@serverest.dev', 'admin123');
+  test.beforeAll(async ({ playwright }) => {
+    // Cria um contexto manual para a API (não reutiliza a fixture)
+    apiContext = await playwright.request.newContext({
+      baseURL: process.env.BASE_URL || 'https://serverest.dev',
+      extraHTTPHeaders: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    });
+    client = new ApiClient(apiContext, process.env.BASE_URL || 'https://serverest.dev');
+    await client.login('johnqateste@gmail.com', 'john123');
+  });
+
+  test.afterAll(async () => {
+    await apiContext.dispose();
   });
 
   test('CT-API-01: Deve listar produtos com schema válido', async () => {

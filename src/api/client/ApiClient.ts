@@ -10,6 +10,9 @@ export class ApiClient {
     this.baseURL = baseURL;
   }
 
+  /**
+   * Realiza login e armazena o token de autenticação
+   */
   async login(email: string, password: string): Promise<string> {
     const response = await this.request.post(`${this.baseURL}/login`, {
       data: { email, password },
@@ -19,26 +22,38 @@ export class ApiClient {
     return this.token;
   }
 
+  /**
+   * Método auxiliar para montar o header de autorização corretamente
+   */
+  private getAuthHeader(): string | null {
+    if (!this.token) return null;
+    // Verifica se o token já tem o prefixo "Bearer "
+    return this.token.startsWith('Bearer ') ? this.token : `Bearer ${this.token}`;
+  }
+
   async get(endpoint: string, auth: boolean = false): Promise<APIResponse> {
     const headers: Record<string, string> = {};
-    if (auth && this.token) {
-      headers['Authorization'] = `Bearer ${this.token}`;
+    if (auth) {
+      const authHeader = this.getAuthHeader();
+      if (authHeader) headers['Authorization'] = authHeader;
     }
     return await this.request.get(`${this.baseURL}${endpoint}`, { headers });
   }
 
   async post(endpoint: string, data: any, auth: boolean = false): Promise<APIResponse> {
     const headers: Record<string, string> = {};
-    if (auth && this.token) {
-      headers['Authorization'] = `Bearer ${this.token}`;
+    if (auth) {
+      const authHeader = this.getAuthHeader();
+      if (authHeader) headers['Authorization'] = authHeader;
     }
     return await this.request.post(`${this.baseURL}${endpoint}`, { data, headers });
   }
 
   async delete(endpoint: string, auth: boolean = false): Promise<APIResponse> {
     const headers: Record<string, string> = {};
-    if (auth && this.token) {
-      headers['Authorization'] = `Bearer ${this.token}`;
+    if (auth) {
+      const authHeader = this.getAuthHeader();
+      if (authHeader) headers['Authorization'] = authHeader;
     }
     return await this.request.delete(`${this.baseURL}${endpoint}`, { headers });
   }

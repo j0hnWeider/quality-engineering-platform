@@ -16,8 +16,8 @@ export const options = {
 
 export default function () {
   const payload = JSON.stringify({
-    email: 'admin@serverest.dev',
-    password: 'admin123',
+    email: 'johnqateste@gmail.com',
+    password: 'john123',
   });
 
   const params = {
