@@ -8,7 +8,6 @@
     "test:all": "npx playwright test",
     "test:perf": "k6 run src/performance/stress-test.js",
     "test:security": "bash src/security/zap-baseline-scan.sh",
-    "report:allure": "allure generate reports/allure-results --clean -o reports/allure-report && allure open reports/allure-report",
     "pretest": "npx playwright install"
   },
   "devDependencies": {
