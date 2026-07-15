@@ -78,7 +78,7 @@ imagens/              # Prints dos resultados
 - Docker (para execução do ZAP local ou no pipeline)
 ```
 ---
-
+```
 ## Como executar localmente
 
 1. Clone o repositório:
