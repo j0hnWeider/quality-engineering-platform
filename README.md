@@ -42,12 +42,12 @@ Essa abordagem demonstra capacidade de adaptação a diferentes sistemas e conte
 - **OWASP ZAP** – scanner de segurança passivo.
 - **GitHub Actions** – pipeline de integração contínua.
 - **Docker** – execução do ZAP no pipeline.
-
+```
 ---
 
 ## Estrutura do projeto
 
-```
+```bash
 src/
   api/
     client/           # Cliente HTTP reutilizável (Serverest)
