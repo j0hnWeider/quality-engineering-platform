@@ -24,7 +24,7 @@ Projeto criado para demonstrar competências em engenharia de qualidade, com foc
 - **OWASP ZAP** – scanner de segurança passivo.
 - **GitHub Actions** – pipeline de integração contínua.
 - **Docker** – execução do ZAP no pipeline.
-
+```
 ---
 
 ## Estrutura do projeto
