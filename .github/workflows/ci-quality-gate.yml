@@ -1,0 +1,51 @@
+name: 🛡️ Quality Gate Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  quality-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run API Tests
+        run: npm run test:api
+        env:
+          BASE_URL: https://serverest.dev
+
+      - name: Run UI Tests
+        run: npm run test:ui
+        env:
+          BASE_URL: https://serverest.dev
+
+      - name: Generate Allure Report
+        if: always()
+        run: npm run report:allure
+
+      - name: Performance Smoke Test (k6)
+        run: npm run test:perf
+
+      - name: Security Baseline Scan (OWASP ZAP)
+        run: |
+          chmod +x src/security/zap-baseline-scan.sh
+          mkdir -p reports
+          sudo ./src/security/zap-baseline-scan.sh
+
+      - name: Upload Test Artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-reports
+          path: reports/
