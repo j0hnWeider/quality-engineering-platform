@@ -31,7 +31,7 @@ O sistema sob teste é a API pública Serverest, mas a arquitetura do framework 
 - Docker
 ```
 ## Estrutura de diretórios
-
+```
 
 src/
   api/
@@ -46,7 +46,7 @@ src/
 reports/              # Relatórios gerados
 .github/workflows/    # Pipeline CI
 ```
-```
+
 
 ## Como executar localmente
 
