@@ -4,10 +4,12 @@ import { faker } from '@faker-js/faker';
 
 let apiContext: APIRequestContext;
 let client: ApiClient;
+let testEmail: string;
+let testPassword: string;
 
 test.describe('API - Produtos (Contratos e Segurança)', () => {
   test.beforeAll(async ({ playwright }) => {
-    // Cria um contexto manual para a API (não reutiliza a fixture)
+    // Configura contexto da API
     apiContext = await playwright.request.newContext({
       baseURL: process.env.BASE_URL || 'https://serverest.dev',
       extraHTTPHeaders: {
@@ -15,11 +17,37 @@ test.describe('API - Produtos (Contratos e Segurança)', () => {
         'Content-Type': 'application/json',
       },
     });
+
+    // Cria uma conta administradora nova para o teste
+    testEmail = `qa_${faker.string.alphanumeric(8)}@teste.com`;
+    testPassword = '123456';
+
+    const createUserResponse = await apiContext.post('/usuarios', {
+      data: {
+        nome: 'QA Automacao',
+        email: testEmail,
+        password: testPassword,
+        administrador: 'true',
+      },
+    });
+
+    // Se a conta já existir, tenta fazer login com ela (pode ser que já exista)
+    if (createUserResponse.status() === 400) {
+      // Usuário já existe, então apenas usamos as credenciais
+      console.log('Usuário já existia, prosseguindo com login');
+    } else if (createUserResponse.status() !== 201) {
+      throw new Error(`Falha ao criar usuário: ${createUserResponse.status()}`);
+    }
+
+    // Inicializa o ApiClient e faz login
     client = new ApiClient(apiContext, process.env.BASE_URL || 'https://serverest.dev');
-    await client.login('johnqateste@gmail.com', 'john123');
+    const token = await client.login(testEmail, testPassword);
+    console.log(`Login realizado com sucesso para ${testEmail}`);
   });
 
   test.afterAll(async () => {
+    // Opcional: deletar o usuário criado para limpeza
+    // await client.delete(`/usuarios/${userId}`, true);
     await apiContext.dispose();
   });
 
