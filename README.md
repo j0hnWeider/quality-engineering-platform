@@ -1,127 +1,155 @@
-```yaml
+```markdown
 # Quality Engineering Platform
 
-Este repositório contém um framework de automação de testes que integra validação de API, testes end-to-end em UI, testes de performance e uma camada de segurança básica.
-Foi construído como parte do meu portfólio para demonstrar experiência em engenharia de qualidade, com foco em pipeline CI/CD e boas práticas de desenvolvimento.
+Framework de automação para testes de API, interface, performance e segurança, integrado a um pipeline CI/CD.
 
-O projeto usa uma API pública (Serverest) como sistema sob teste, mas a estrutura é genérica o suficiente para ser adaptada a qualquer aplicação.
+O projeto foi desenvolvido como parte de um portfólio para demonstrar competências em engenharia de qualidade, com ênfase em boas práticas de automação, rastreabilidade e entrega contínua.
 
----
-
-## O que está incluído
-
-- Testes de API com validação de contrato (schema) e cenários de segurança (ex.: tentativa de acesso sem token).
-- Testes de interface com Page Objects e fluxo de login.
-- Testes de performance usando k6, com limiares de SLA definidos (tempo de resposta e taxa de falha).
-- Varredura passiva de segurança com OWASP ZAP, integrada ao pipeline.
-- Pipeline automatizado no GitHub Actions que executa todos os testes a cada push ou pull request na branch main.
-- Relatórios gerados com Allure (para testes funcionais) e HTML (para ZAP).
+O sistema sob teste é a API pública Serverest, mas a arquitetura do framework foi pensada para ser adaptável a diferentes aplicações.
 
 ---
 
-## Tecnologias utilizadas
+## Escopo
 
-- TypeScript (para tipagem e manutenção)
-- Playwright (orquestrador de testes, suporta API e UI)
-- k6 (teste de carga)
-- OWASP ZAP (scanner de segurança)
-- GitHub Actions (CI/CD)
-- Allure (relatórios)
-- Docker (para execução do ZAP)
+- Testes de API com validação de contrato (schema) e cenários de segurança (acesso não autorizado)
+- Testes end-to-end de interface com Page Objects
+- Testes de performance com k6 e limiares de SLA
+- Varredura de segurança passiva com OWASP ZAP
+- Pipeline automatizado no GitHub Actions
+- Relatórios com Allure (testes funcionais) e HTML (ZAP)
 
 ---
 
-## Estrutura do projeto
+## Tecnologias
 
-A organização das pastas reflete a separação entre camadas:
+- TypeScript
+- Playwright (API + UI)
+- k6
+- OWASP ZAP
+- GitHub Actions
+- Allure
+- Docker
+
+---
+
+## Estrutura de diretórios
+
+```
 src/
-api/ # testes e clientes para API
-client/ # classe reutilizável para requisições HTTP
-tests/ # specs de API
-ui/ # testes de interface
-pages/ # Page Objects
-tests/ # specs de UI
-performance/ # scripts de carga (k6)
-security/ # scripts para ZAP
-utils/ # funções auxiliares (em desenvolvimento)
-reports/ # gerado automaticamente com os resultados
-.github/workflows/ # pipeline CI
+  api/
+    client/           # Cliente HTTP reutilizável
+    tests/            # Specs de API
+  ui/
+    pages/            # Page Objects
+    tests/            # Specs de UI
+  performance/        # Scripts k6
+  security/           # Scripts ZAP
+  utils/              # Funções auxiliares
+reports/              # Relatórios gerados
+.github/workflows/    # Pipeline CI
+```
 
 ---
 
-## Como rodar localmente
+## Como executar localmente
 
 1. Clone o repositório:
-   ```bash
-   git clone https://github.com/j0hnWeider/quality-engineering-platform.git
-   cd quality-engineering-platform
-Instale as dependências:
 
-bash
+```bash
+git clone https://github.com/j0hnWeider/quality-engineering-platform.git
+cd quality-engineering-platform
+```
+
+2. Instale as dependências:
+
+```bash
 npm install
 npx playwright install
-Configure as variáveis de ambiente (opcional, pois a URL padrão já está definida):
+```
 
-bash
+3. (Opcional) Configure as variáveis de ambiente:
+
+```bash
 cp .env.example .env
 # edite .env se necessário
-Execute todos os testes (API + UI):
+```
 
-bash
+4. Execute todos os testes (API + UI):
+
+```bash
 npm run test:all
-Execute apenas os testes de API:
+```
 
-bash
+5. Execute apenas os testes de API:
+
+```bash
 npm run test:api
-Execute apenas os testes de UI:
+```
 
-bash
+6. Execute apenas os testes de UI:
+
+```bash
 npm run test:ui
-Para rodar o teste de performance, instale o k6 (https://k6.io) e depois:
+```
 
-bash
+7. Execute o teste de performance (requer k6 instalado):
+
+```bash
 npm run test:perf
-Para rodar o scan de segurança, é necessário ter o Docker instalado. Depois:
+```
 
-bash
+8. Execute o scan de segurança (requer Docker):
+
+```bash
 npm run test:security
-O relatório será gerado em reports/zap-report.html.
+```
 
-Pipeline CI/CD
-O arquivo .github/workflows/ci-quality-gate.yml define o pipeline. Ele executa:
+O relatório do ZAP será gerado em `reports/zap-report.html`.
 
-Instalação das dependências
+---
 
-Testes de API
+## Pipeline CI/CD
 
-Testes de UI
+O pipeline definido em `.github/workflows/ci-quality-gate.yml` executa as seguintes etapas em cada push ou pull request para a branch `main`:
 
-Geração do relatório Allure
+- Instalação de dependências
+- Testes de API
+- Testes de UI
+- Geração do relatório Allure
+- Teste de performance com k6
+- Scan de segurança com ZAP
 
-Teste de performance com k6
+O pipeline é interrompido (falha) caso:
+- Algum teste funcional falhe
+- Os limiares de performance sejam violados (p95 > 500ms ou taxa de erro > 1%)
+- O ZAP identifique vulnerabilidades de nível "Alta"
 
-Scan de segurança com ZAP
+---
 
-Se qualquer etapa falhar (incluindo violação dos limiares de performance ou descoberta de vulnerabilidade classificada como "Alta" pelo ZAP), o pipeline falha, bloqueando o merge.
+## Decisões técnicas
 
-Observações sobre decisões técnicas
-Optei pelo Playwright por ele oferecer uma API unificada para testes de API e UI, reduzindo a complexidade de manutenção e a quantidade de ferramentas no projeto. O uso de TypeScript traz segurança de tipos e facilita a refatoração.
+- **Playwright**: escolhido por oferecer uma API unificada para testes de API e UI, reduzindo a complexidade e o número de ferramentas no projeto.
+- **TypeScript**: adotado para garantir segurança de tipos e facilitar a manutenção e refatoração.
+- **k6**: utilizado por sua leveza, facilidade de integração com pipelines e suporte nativo a execução em containers.
+- **ZAP em modo baseline**: adotado como camada inicial de segurança, sem gerar tráfego ofensivo, apenas analisando respostas para vulnerabilidades conhecidas.
 
-Os testes de performance foram configurados com estágios de carga progressiva para simular um cenário realista e os limiares (thresholds) refletem critérios de aceite não funcionais.
+---
 
-A camada de segurança foi adicionada como um passo extra no pipeline, não como substituta de uma avaliação aprofundada, mas como um filtro inicial para evitar que vulnerabilidades óbvias cheguem à produção.
+## Próximos passos
 
-Próximos passos (se eu continuar o projeto)
-Adicionar testes de contrato com Pact (consumer-driven)
+- Testes de contrato com Pact (consumer-driven)
+- Testes de acessibilidade com axe-core
+- Dashboard com métricas históricas de performance
+- Parametrização da URL base para diferentes ambientes (dev, staging, produção)
 
-Incluir testes de acessibilidade (axe-core)
+---
 
-Criar um dashboard com métricas históricas de performance
+## Autor
 
-Parametrizar a URL base para ambientes diferentes (dev, staging, prod)
+**John Weider** – Engenheiro de QA  
+Pós-graduado em Engenharia de Software  
+Graduação em Defesa Cibernética
 
-Autor
-John Weider – Engenheiro de QA | Pós-graduado em Engenharia de Software | Graduação em Defesa Cibernética.
-
-LinkedIn: https://www.linkedin.com/in/john-weider-98bb041b2/
+LinkedIn: [https://www.linkedin.com/in/john-weider-98bb041b2/](https://www.linkedin.com/in/john-weider-98bb041b2/)  
 E-mail: zeus.programador@gmail.com
+```
