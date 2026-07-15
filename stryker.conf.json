@@ -1,0 +1,15 @@
+{
+  "mutate": ["src/**/*.ts"],
+  "testRunner": "command",
+  "commandRunner": {
+    "command": "npm run test:all"
+  },
+  "coverageAnalysis": "perTest",
+  "reporters": ["html", "progress"],
+  "htmlReporter": {
+    "fileName": "reports/mutation/index.html"
+  },
+  "tsconfigFile": "tsconfig.json",
+  "mutator": "typescript",
+  "exclude": ["src/**/*.spec.ts", "src/**/mock/**"]
+}
