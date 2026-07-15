@@ -110,15 +110,15 @@ O relatório do ZAP será gerado em `reports/zap-report.html`.
 
 ### Testes de API
 
-![Testes de API passando](images/api-tests-passing.png)
+![Testes de API passando](imagens/api-tests-passing.png)
 
 ### Testes de UI
 
-![Testes de UI passando](images/ui-tests-passing.png)
+![Testes de UI passando](imagens/ui-tests-passing.png)
 
 ### Pipeline CI/CD no GitHub Actions
 
-![Pipeline verde no GitHub Actions](images/pipeline-passing.png)
+![Pipeline verde no GitHub Actions](imagens/pipeline-passing.png)
 
 ---
 
