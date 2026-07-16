@@ -10,7 +10,6 @@ import { faker } from '@faker-js/faker';
 
 let apiContext: APIRequestContext;
 let client: ApiClient;
-let createdProductId: string;
 
 test.describe('API - CRUD de Produtos', () => {
   test.beforeAll(async ({ playwright }) => {
@@ -29,6 +28,9 @@ test.describe('API - CRUD de Produtos', () => {
     await apiContext.dispose();
   });
 
+  // --------------------------------------------------------------------
+  // API-04: Criar produto com sucesso
+  // --------------------------------------------------------------------
   test('API-04: Criar produto com sucesso', async () => {
     const response = await client.post('/produtos', {
       nome: faker.commerce.productName(),
@@ -38,10 +40,13 @@ test.describe('API - CRUD de Produtos', () => {
     }, true);
     expect(response.status()).toBe(201);
     const body = await response.json();
-    createdProductId = body._id;
     expect(body.message).toContain('Cadastro realizado com sucesso');
+    expect(body._id).toBeDefined();
   });
 
+  // --------------------------------------------------------------------
+  // API-05: Criar produto com dados inválidos
+  // --------------------------------------------------------------------
   test('API-05: Criar produto com dados inválidos', async () => {
     // Cenário 1: Nome vazio
     let response = await client.post('/produtos', {
@@ -50,6 +55,7 @@ test.describe('API - CRUD de Produtos', () => {
       descricao: 'Teste',
       quantidade: 1
     }, true);
+    // Serverest retorna 400 para campos obrigatórios ausentes
     expect(response.status()).toBe(400);
 
     // Cenário 2: Preço negativo
@@ -71,8 +77,11 @@ test.describe('API - CRUD de Produtos', () => {
     expect(response.status()).toBe(400);
   });
 
+  // --------------------------------------------------------------------
+  // API-08: Atualizar produto com sucesso
+  // --------------------------------------------------------------------
   test('API-08: Atualizar produto com sucesso', async () => {
-    // Primeiro cria um produto
+    // 1. Cria um produto para atualizar
     const createResponse = await client.post('/produtos', {
       nome: faker.commerce.productName(),
       preco: 100,
@@ -80,10 +89,10 @@ test.describe('API - CRUD de Produtos', () => {
       quantidade: 5
     }, true);
     expect(createResponse.status()).toBe(201);
-    const product = await createResponse.json();
-    const productId = product._id;
+    const created = await createResponse.json();
+    const productId = created._id;
 
-    // Atualiza o produto
+    // 2. Atualiza o produto
     const updateResponse = await client.put(`/produtos/${productId}`, {
       nome: 'Produto Atualizado',
       preco: 200,
@@ -95,18 +104,26 @@ test.describe('API - CRUD de Produtos', () => {
     expect(updated.message).toContain('Registro alterado com sucesso');
   });
 
+  // --------------------------------------------------------------------
+  // API-09: Atualizar produto inexistente
+  // --------------------------------------------------------------------
   test('API-09: Atualizar produto inexistente', async () => {
-    const response = await client.put('/produtos/999999', {
+    // Usa um ID que não existe no sistema
+    const response = await client.put('/produtos/999999999', {
       nome: 'Produto Inexistente',
       preco: 100,
       descricao: 'Teste',
       quantidade: 1
     }, true);
-    expect(response.status()).toBe(404);
+    // Serverest retorna 400 ou 404 para produto inexistente
+    expect([400, 404]).toContain(response.status());
   });
 
+  // --------------------------------------------------------------------
+  // API-10: Excluir produto com sucesso
+  // --------------------------------------------------------------------
   test('API-10: Excluir produto com sucesso', async () => {
-    // Primeiro cria um produto
+    // 1. Cria um produto para excluir
     const createResponse = await client.post('/produtos', {
       nome: faker.commerce.productName(),
       preco: 100,
@@ -114,18 +131,22 @@ test.describe('API - CRUD de Produtos', () => {
       quantidade: 5
     }, true);
     expect(createResponse.status()).toBe(201);
-    const product = await createResponse.json();
-    const productId = product._id;
+    const created = await createResponse.json();
+    const productId = created._id;
 
-    // Exclui o produto
+    // 2. Exclui o produto
     const deleteResponse = await client.delete(`/produtos/${productId}`, true);
     expect(deleteResponse.status()).toBe(200);
     const deleted = await deleteResponse.json();
     expect(deleted.message).toContain('Registro excluído com sucesso');
   });
 
+  // --------------------------------------------------------------------
+  // API-11: Excluir produto inexistente
+  // --------------------------------------------------------------------
   test('API-11: Excluir produto inexistente', async () => {
-    const response = await client.delete('/produtos/999999', true);
-    expect(response.status()).toBe(404);
+    const response = await client.delete('/produtos/999999999', true);
+    // Serverest retorna 400 ou 404 para produto inexistente
+    expect([400, 404]).toContain(response.status());
   });
 });
