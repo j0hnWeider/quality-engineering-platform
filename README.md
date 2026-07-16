@@ -599,7 +599,7 @@ O QA Forge representa minha jornada prática de aprendizado, reunindo experiment
 
 # Contato
 
-- 💼 **LinkedIn:** https://www.linkedin.com/in/john-weider-98bb041b2/
+- 💼 **LinkedIn:** https://www.linkedin.com/in/john-weider
 - 📧 **E-mail:** zeus.programador@gmail.com
 
 ---
