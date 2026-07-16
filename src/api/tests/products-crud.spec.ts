@@ -10,9 +10,12 @@ import { faker } from '@faker-js/faker';
 
 let apiContext: APIRequestContext;
 let client: ApiClient;
+let testEmail: string;
+let testPassword: string;
 
 test.describe('API - CRUD de Produtos', () => {
   test.beforeAll(async ({ playwright }) => {
+    // Cria uma conta administradora dinâmica
     apiContext = await playwright.request.newContext({
       baseURL: process.env.API_BASE_URL || 'https://serverest.dev',
       extraHTTPHeaders: {
@@ -20,8 +23,28 @@ test.describe('API - CRUD de Produtos', () => {
         'Content-Type': 'application/json',
       },
     });
+
+    testEmail = `qa_crud_${Date.now()}_${faker.string.alphanumeric(6)}@teste.com`;
+    testPassword = '123456';
+
+    const createUserResponse = await apiContext.post('/usuarios', {
+      data: {
+        nome: 'QA CRUD Teste',
+        email: testEmail,
+        password: testPassword,
+        administrador: 'true',
+      },
+    });
+
+    if (createUserResponse.status() !== 201) {
+      throw new Error(
+        `Falha ao criar conta: ${createUserResponse.status()} - ${await createUserResponse.text()}`
+      );
+    }
+
+    // Autentica com a conta criada
     client = new ApiClient(apiContext, process.env.API_BASE_URL || 'https://serverest.dev');
-    await client.login('johnqateste@gmail.com', 'john123');
+    await client.login(testEmail, testPassword);
   });
 
   test.afterAll(async () => {
@@ -55,7 +78,6 @@ test.describe('API - CRUD de Produtos', () => {
       descricao: 'Teste',
       quantidade: 1
     }, true);
-    // Serverest retorna 400 para campos obrigatórios ausentes
     expect(response.status()).toBe(400);
 
     // Cenário 2: Preço negativo
@@ -108,14 +130,12 @@ test.describe('API - CRUD de Produtos', () => {
   // API-09: Atualizar produto inexistente
   // --------------------------------------------------------------------
   test('API-09: Atualizar produto inexistente', async () => {
-    // Usa um ID que não existe no sistema
     const response = await client.put('/produtos/999999999', {
       nome: 'Produto Inexistente',
       preco: 100,
       descricao: 'Teste',
       quantidade: 1
     }, true);
-    // Serverest retorna 400 ou 404 para produto inexistente
     expect([400, 404]).toContain(response.status());
   });
 
@@ -146,7 +166,6 @@ test.describe('API - CRUD de Produtos', () => {
   // --------------------------------------------------------------------
   test('API-11: Excluir produto inexistente', async () => {
     const response = await client.delete('/produtos/999999999', true);
-    // Serverest retorna 400 ou 404 para produto inexistente
     expect([400, 404]).toContain(response.status());
   });
 });
