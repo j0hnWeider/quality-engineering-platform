@@ -1,11 +1,19 @@
+# Dependências
 node_modules/
 dist/
-reports/
+
+# Arquivos de ambiente
 .env
+.env.local
+.env.*.local
+
+# Relatórios e resultados de testes
+reports/
 playwright-report/
 test-results/
-*.log
-.DS_Store
+allure-results/
+allure-report/
+
 # Cobertura e mutação
 reports/coverage/
 reports/mutation/
@@ -13,3 +21,21 @@ reports/mutation/
 # Logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Arquivos do sistema
+.DS_Store
+Thumbs.db
+*.tmp
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Arquivos de build
+*.tgz
+*.tar.gz
+*.zip
