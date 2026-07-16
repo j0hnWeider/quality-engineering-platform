@@ -106,6 +106,30 @@ Embora o QA Forge seja um ambiente de estudos, ele também representa minha form
 Ao invés de apresentar apenas certificados ou conhecimento teórico, este repositório documenta minha evolução técnica por meio de implementações, experimentos, decisões arquiteturais e práticas adotadas ao longo do desenvolvimento do projeto.
 
 Cada commit representa uma etapa da minha evolução como Engenheiro de Qualidade.
+---
+
+# Experiência Aplicada
+
+Embora o **QA Forge** seja um laboratório de estudos e experimentação, sua construção é fortemente influenciada pela minha atuação profissional em projetos reais de desenvolvimento de software, arquitetura de aplicações e garantia de qualidade.
+
+Ao longo da minha carreira, participei do desenvolvimento de soluções corporativas utilizando tecnologias como **Java (Spring Boot)**, **Node.js**, **Angular**, **React**, **Next.js**, **PostgreSQL**, **AWS** e **GitHub Actions**, sempre conciliando o desenvolvimento de software com práticas modernas de Engenharia de Qualidade.
+
+Essa experiência permitiu aplicar, na prática, conceitos que hoje fazem parte deste laboratório, tais como:
+
+| Experiência Profissional | Aplicação no QA Forge |
+|--------------------------|-----------------------|
+| Planejamento da estratégia de testes para microsserviços | Estrutura modular da suíte de testes |
+| Automação de APIs utilizando Postman e RestAssured | Implementação da camada de testes de API com Playwright |
+| Testes funcionais em aplicações Angular, React e Next.js | Arquitetura de testes End-to-End utilizando Page Objects |
+| Aplicação das recomendações do OWASP Top 10 | Implementação dos cenários de segurança e integração com OWASP ZAP |
+| Testes em PostgreSQL | Validação de regras de negócio e consistência de dados |
+| Arquitetura de microsserviços | Organização desacoplada do projeto |
+| CI/CD com GitHub Actions | Pipeline automatizado de validação da qualidade |
+| Secure Coding e análise estática (SAST) | Adoção de práticas de Security by Design e qualidade de código |
+
+O QA Forge representa a convergência entre minha formação acadêmica, minha experiência profissional e meu compromisso com a evolução contínua na área de Engenharia de Qualidade.
+
+Mais do que reproduzir exemplos encontrados em cursos, este laboratório busca transformar conhecimentos adquiridos em projetos reais em soluções práticas, reutilizáveis e alinhadas às boas práticas adotadas pela indústria de software.
 
 # Estratégia de Testes
 
@@ -459,3 +483,116 @@ Após a execução dos testes, são gerados relatórios que auxiliam na análise
 | Allure Results | `allure-results/` |
 | Test Results | `test-results/` |
 | OWASP ZAP Report | `reports/` |
+
+# Pipeline CI/CD
+
+Toda alteração enviada para a branch principal é validada automaticamente por meio do **GitHub Actions**, garantindo que apenas mudanças compatíveis com os critérios de qualidade sejam integradas ao projeto.
+
+## Quality Gate
+
+| Etapa | Objetivo |
+|--------|----------|
+| 📦 Instalação das dependências | Preparação do ambiente |
+| 🎭 Instalação dos navegadores | Configuração do Playwright |
+| 🌐 Testes de API | Validação funcional e de segurança |
+| 🖥️ Testes de Interface | Execução dos fluxos End-to-End |
+| ⚡ Testes de Performance | Validação dos limites definidos |
+| 🔒 Scanner OWASP ZAP | Verificação passiva de vulnerabilidades |
+| 📄 Geração de Relatórios | Publicação das evidências da execução |
+
+Caso qualquer etapa crítica falhe, o pipeline é interrompido, impedindo a integração de alterações que comprometam a qualidade do projeto.
+
+---
+
+# Decisões Técnicas
+
+Durante o desenvolvimento do QA Forge, algumas decisões arquiteturais foram tomadas para tornar o projeto mais organizado, reutilizável e próximo da realidade encontrada em equipes de Engenharia de Qualidade.
+
+| Decisão | Motivação |
+|----------|-----------|
+| **Playwright** | Framework único para automação de API e Interface, reduzindo complexidade e facilitando a manutenção. |
+| **TypeScript** | Tipagem estática para maior segurança, legibilidade e facilidade de refatoração. |
+| **Arquitetura Híbrida** | Utilização de ambientes distintos para API e Interface, reduzindo flakiness e aumentando a estabilidade dos testes. |
+| **Page Object Model (POM)** | Centralização dos elementos e ações da interface, promovendo reutilização e desacoplamento. |
+| **Cliente HTTP Reutilizável** | Padronização das chamadas à API e redução da duplicação de código. |
+| **Criação dinâmica de dados** | Geração automática de usuários e dados de teste, evitando dependência de informações fixas. |
+| **OWASP ZAP Baseline** | Varredura passiva de segurança integrada ao pipeline, sem realizar testes destrutivos. |
+| **GitHub Actions** | Automação da execução da suíte de testes em cada alteração do projeto. |
+
+---
+
+# Roadmap
+
+O QA Forge está em constante evolução. Novos estudos e experimentações serão incorporados ao projeto conforme novas tecnologias e práticas forem exploradas.
+
+| Funcionalidade | Status |
+|----------------|:------:|
+| Testes de Contrato com Pact | ⏳ |
+| Testes de Acessibilidade com axe-core | ⏳ |
+| Visual Regression Testing | ⏳ |
+| Testes Mobile com Playwright | ⏳ |
+| Execução Paralela Distribuída | ⏳ |
+| Integração com SonarQube | ⏳ |
+| Dashboard de Métricas | ⏳ |
+| Testes orientados por Dados (Data Driven) | ⏳ |
+
+---
+
+# Contribuição
+
+O **QA Forge** é um laboratório de estudos mantido como parte da minha evolução em Engenharia de Qualidade.
+
+Embora o foco principal seja o aprendizado contínuo, sugestões, ideias e discussões sobre boas práticas, ferramentas e estratégias de testes são sempre bem-vindas.
+
+Caso identifique alguma oportunidade de melhoria, fique à vontade para abrir uma **Issue** ou enviar um **Pull Request**.
+
+---
+
+# Licença
+
+Este projeto está licenciado sob a licença **MIT**.
+
+Consulte o arquivo `LICENSE` para mais informações.
+
+---
+
+#  Autor
+
+## John Weider
+
+Engenheiro de Qualidade em constante evolução, com experiência em desenvolvimento de software e interesse nas áreas de automação de testes, segurança de aplicações e integração contínua.
+
+O QA Forge representa minha jornada prática de aprendizado, reunindo experimentos, estudos e implementações voltadas à construção de soluções de qualidade utilizando ferramentas e práticas adotadas pelo mercado.
+
+### Formação Acadêmica
+
+- 🎓 Pós-graduação em Engenharia de Software
+- 🎓 Graduação em Defesa Cibernética
+
+### Áreas de Interesse
+
+- Engenharia de Qualidade
+- Automação de Testes
+- Testes de API
+- Testes End-to-End
+- Performance Testing
+- Application Security
+- DevSecOps
+- Integração Contínua
+
+### Contato
+
+- 💼 **LinkedIn:** https://www.linkedin.com/in/john-weider-98bb041b2/
+- 📧 **E-mail:** zeus.programador@gmail.com
+
+---
+
+<div align="center">
+
+### ⭐ Obrigado por visitar o QA Forge!
+
+Se este projeto foi útil ou despertou seu interesse, considere deixar uma ⭐ no repositório.
+
+**Construindo qualidade através da prática, experimentação e aprendizado contínuo.**
+
+</div>
