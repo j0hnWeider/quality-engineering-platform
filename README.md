@@ -1,27 +1,17 @@
 <div align="center">
-
-<!-- Banner Pixel Art -->
-<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 900 250">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap');
-    .pixel-text {
-      font-family: 'Press Start 2P', monospace;
-      fill: white;
-      text-anchor: middle;
-      dominant-baseline: central;
-      paint-order: stroke fill;
-      stroke: #000000;
-      stroke-width: 6px;
-      stroke-linejoin: round;
-    }
-  </style>
-  <image href="imagens/pixel-jeff-mario.gif" width="900" height="250" preserveAspectRatio="xMidYMid slice"/>
-  <rect width="900" height="250" fill="rgba(0,0,0,0.3)"/>
-  <text x="450" y="120" class="pixel-text" font-size="56">QA FORGE</text>
-  <text x="450" y="185" class="pixel-text" font-size="18">LABORATÓRIO DE ENGENHARIA DE QUALIDADE</text>
-</svg>
-
-<br><br>
+  <table>
+    <tr>
+      <td align="center" style="padding: 0; border: none; background-image: url('imagens/pixel-jeff-mario.gif'); background-size: cover; background-position: center; width: 900px; height: 250px; border-radius: 12px;">
+        <div style="background: rgba(0,0,0,0.4); width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 12px;">
+          <h1 style="font-family: 'Press Start 2P', monospace; color: white; font-size: 56px; margin: 0; text-shadow: 4px 4px 0 #000;">QA FORGE</h1>
+          <p style="font-family: 'Press Start 2P', monospace; color: #d1d5db; font-size: 18px; margin: 10px 0 0 0; text-shadow: 2px 2px 0 #000;">LABORATÓRIO DE ENGENHARIA DE QUALIDADE</p>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <br><br>
+  <h1>🚀 QA Forge</h1>
+</div>
 
 <div align="center">
 
