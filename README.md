@@ -421,7 +421,7 @@ Caso necessário, ajuste as variáveis de ambiente conforme sua necessidade.
 | `npm run test:api` | Executa apenas os testes de API |
 | `npm run test:ui` | Executa apenas os testes de Interface |
 | `npm run test:perf` | Executa os testes de Performance (k6) |
-| `npm run test:zap` | Executa o scanner OWASP ZAP |
+| `npm run test:security` | Executa o scanner OWASP ZAP |
 | `npm run lint` | Analisa a qualidade do código |
 | `npm run format` | Formata o código com Prettier |
 
