@@ -1,0 +1,1 @@
+CORS muito permissivo (Access-Control-Allow-Origin: *)

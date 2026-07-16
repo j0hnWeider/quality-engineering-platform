@@ -2,62 +2,27 @@
  * Testes de CRUD completo para produtos
  * 
  * Objetivo: validar operações de criação, atualização e exclusão
- * 
- * Estratégia: cria uma conta administradora dinamicamente para garantir
- * que as credenciais sejam válidas e a conta tenha permissões adequadas.
+ * utilizando conta administradora dinâmica via fixture.
  */
 
-import { test, expect, APIRequestContext } from '@playwright/test';
-import { ApiClient } from '../client/ApiClient';
+import { test, expect } from '@playwright/test';
+import { createAuthenticatedClient } from '../fixtures/auth.fixture';
 import { faker } from '@faker-js/faker';
 
-let apiContext: APIRequestContext;
-let client: ApiClient;
-let testEmail: string;
-let testPassword: string;
-
 test.describe('API - CRUD de Produtos', () => {
-  test.beforeAll(async ({ playwright }) => {
-    // Cria um contexto de API
-    apiContext = await playwright.request.newContext({
-      baseURL: process.env.API_BASE_URL || 'https://serverest.dev',
-      extraHTTPHeaders: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
+  let client: any;
+  let apiContext: any;
 
-    // Gera credenciais únicas
-    testEmail = `qa_crud_${faker.string.alphanumeric(10)}@teste.com`;
-    testPassword = '123456';
-
-    // Cria uma conta administradora via API
-    const createUserResponse = await apiContext.post('/usuarios', {
-      data: {
-        nome: 'QA CRUD Teste',
-        email: testEmail,
-        password: testPassword,
-        administrador: 'true',
-      },
-    });
-
-    if (createUserResponse.status() !== 201) {
-      const errorBody = await createUserResponse.text();
-      throw new Error(`Falha ao criar conta: ${createUserResponse.status()} - ${errorBody}`);
-    }
-
-    // Inicializa o cliente e faz login com a conta criada
-    client = new ApiClient(apiContext, process.env.API_BASE_URL || 'https://serverest.dev');
-    await client.login(testEmail, testPassword);
+  test.beforeAll(async () => {
+    const auth = await createAuthenticatedClient();
+    client = auth.client;
+    apiContext = auth.apiContext;
   });
 
   test.afterAll(async () => {
     await apiContext.dispose();
   });
 
-  // --------------------------------------------------------------------
-  // API-04: Criar produto com sucesso
-  // --------------------------------------------------------------------
   test('API-04: Criar produto com sucesso', async () => {
     const response = await client.post('/produtos', {
       nome: faker.commerce.productName(),
@@ -71,11 +36,7 @@ test.describe('API - CRUD de Produtos', () => {
     expect(body._id).toBeDefined();
   });
 
-  // --------------------------------------------------------------------
-  // API-05: Criar produto com dados inválidos
-  // --------------------------------------------------------------------
   test('API-05: Criar produto com dados inválidos', async () => {
-    // Cenário 1: Nome vazio
     let response = await client.post('/produtos', {
       nome: '',
       preco: 100,
@@ -84,7 +45,6 @@ test.describe('API - CRUD de Produtos', () => {
     }, true);
     expect(response.status()).toBe(400);
 
-    // Cenário 2: Preço negativo
     response = await client.post('/produtos', {
       nome: 'Produto Teste',
       preco: -100,
@@ -93,7 +53,6 @@ test.describe('API - CRUD de Produtos', () => {
     }, true);
     expect(response.status()).toBe(400);
 
-    // Cenário 3: Quantidade negativa
     response = await client.post('/produtos', {
       nome: 'Produto Teste',
       preco: 100,
@@ -103,11 +62,7 @@ test.describe('API - CRUD de Produtos', () => {
     expect(response.status()).toBe(400);
   });
 
-  // --------------------------------------------------------------------
-  // API-08: Atualizar produto com sucesso
-  // --------------------------------------------------------------------
   test('API-08: Atualizar produto com sucesso', async () => {
-    // 1. Cria um produto para atualizar
     const createResponse = await client.post('/produtos', {
       nome: faker.commerce.productName() + ' - ' + Date.now(),
       preco: 100,
@@ -124,7 +79,6 @@ test.describe('API - CRUD de Produtos', () => {
     const created = await createResponse.json();
     const productId = created._id;
 
-    // 2. Atualiza o produto
     const updateResponse = await client.put(`/produtos/${productId}`, {
       nome: 'Produto Atualizado - ' + Date.now(),
       preco: 200,
@@ -142,9 +96,6 @@ test.describe('API - CRUD de Produtos', () => {
     expect(updated.message).toContain('Registro alterado com sucesso');
   });
 
-  // --------------------------------------------------------------------
-  // API-09: Atualizar produto inexistente
-  // --------------------------------------------------------------------
   test('API-09: Atualizar produto inexistente', async () => {
     const response = await client.put('/produtos/999999999', {
       nome: 'Produto Inexistente',
@@ -155,11 +106,7 @@ test.describe('API - CRUD de Produtos', () => {
     expect([400, 404]).toContain(response.status());
   });
 
-  // --------------------------------------------------------------------
-  // API-10: Excluir produto com sucesso
-  // --------------------------------------------------------------------
   test('API-10: Excluir produto com sucesso', async () => {
-    // 1. Cria um produto para excluir
     const createResponse = await client.post('/produtos', {
       nome: faker.commerce.productName(),
       preco: 100,
@@ -176,16 +123,12 @@ test.describe('API - CRUD de Produtos', () => {
     const created = await createResponse.json();
     const productId = created._id;
 
-    // 2. Exclui o produto
     const deleteResponse = await client.delete(`/produtos/${productId}`, true);
     expect(deleteResponse.status()).toBe(200);
     const deleted = await deleteResponse.json();
     expect(deleted.message).toContain('Registro excluído com sucesso');
   });
 
-  // --------------------------------------------------------------------
-  // API-11: Excluir produto inexistente
-  // --------------------------------------------------------------------
   test('API-11: Excluir produto inexistente', async () => {
     const response = await client.delete('/produtos/999999999', true);
     expect([400, 404]).toContain(response.status());

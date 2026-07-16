@@ -1,0 +1,1 @@
+CORS configurado: Access-Control-Allow-Origin = *

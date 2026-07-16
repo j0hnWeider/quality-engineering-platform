@@ -1,0 +1,8 @@
+{
+  "results": {
+    "path": "allure-results"
+  },
+  "report": {
+    "path": "allure-report"
+  }
+}

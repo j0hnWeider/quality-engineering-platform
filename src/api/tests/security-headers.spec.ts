@@ -1,7 +1,5 @@
 /**
- * ========================================================================
  * Testes de segurança - Cabeçalhos HTTP
- * ========================================================================
  * 
  * Objetivo: verificar a presença e configuração de cabeçalhos de segurança
  * essenciais nas respostas da API.
@@ -11,9 +9,6 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Testes de segurança - Cabeçalhos HTTP', () => {
 
-  // ======================================================================
-  // CT-SEC-08: Cabeçalhos de segurança essenciais
-  // ======================================================================
   test('CT-SEC-08: Deve conter cabeçalhos de segurança essenciais', async ({ request }) => {
     const response = await request.get('https://serverest.dev');
     const headers = response.headers();
@@ -42,13 +37,8 @@ test.describe('Testes de segurança - Cabeçalhos HTTP', () => {
     if (missingHeaders.length > 0) {
       console.warn(`Cabeçalhos de segurança ausentes: ${missingHeaders.join(', ')}`);
     }
-    // Não falha o teste, apenas registra (em ambiente corporativo, isso seria um critério)
-    // expect(missingHeaders).toEqual([]);
   });
 
-  // ======================================================================
-  // CT-SEC-09: Configuração de CORS
-  // ======================================================================
   test('CT-SEC-09: Deve retornar cabeçalho CORS adequado', async ({ request }) => {
     const response = await request.get('https://serverest.dev', {
       headers: { 'Origin': 'https://example.com' },

@@ -1,48 +1,25 @@
-import { test, expect, APIRequestContext } from '@playwright/test';
-import { ApiClient } from '../client/ApiClient';
+/**
+ * Testes de API - Contratos e segurança
+ * 
+ * Objetivo: validar contrato da API e cenários básicos de segurança.
+ */
+
+import { test, expect } from '@playwright/test';
+import { createAuthenticatedClient } from '../fixtures/auth.fixture';
 import { faker } from '@faker-js/faker';
 
-let apiContext: APIRequestContext;
-let client: ApiClient;
-let testEmail: string;
-let testPassword: string;
-
 test.describe('API - Produtos (Contratos e Segurança)', () => {
-  test.beforeAll(async ({ playwright }) => {
-    apiContext = await playwright.request.newContext({
-      baseURL: process.env.API_BASE_URL || 'https://serverest.dev',
-      extraHTTPHeaders: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-    });
+  let client: any;
+  let apiContext: any;
 
-    // Cria uma conta administradora dinamicamente
-    testEmail = `qa_prod_${faker.string.alphanumeric(10)}@teste.com`;
-    testPassword = '123456';
-
-    const createResponse = await apiContext.post('/usuarios', {
-      data: {
-        nome: 'QA Produtos',
-        email: testEmail,
-        password: testPassword,
-        administrador: 'true',
-      },
-    });
-
-    if (createResponse.status() !== 201) {
-      throw new Error(`Falha ao criar conta: ${createResponse.status()} - ${await createResponse.text()}`);
-    }
-
-    // Login com a conta criada
-    client = new ApiClient(apiContext, process.env.API_BASE_URL || 'https://serverest.dev');
-    await client.login(testEmail, testPassword);
+  test.beforeAll(async () => {
+    const auth = await createAuthenticatedClient();
+    client = auth.client;
+    apiContext = auth.apiContext;
   });
 
   test.afterAll(async () => {
-    if (apiContext) {
-      await apiContext.dispose();
-    }
+    await apiContext.dispose();
   });
 
   test('CT-API-01: Deve listar produtos com schema válido', async () => {

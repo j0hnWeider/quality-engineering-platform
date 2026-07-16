@@ -10,8 +10,9 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 1,
   workers: process.env.CI ? 4 : undefined,
   reporter: [
-    ['html'],
-    ['list']
+    ['html'], // relatório HTML padrão do Playwright
+    ['list'], // saída no console
+    ['allure-playwright', { outputFolder: 'allure-results' }] // Allure
   ],
   use: {
     trace: 'on-first-retry',
