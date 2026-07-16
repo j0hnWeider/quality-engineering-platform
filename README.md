@@ -52,6 +52,29 @@ Cada funcionalidade adicionada representa uma oportunidade de explorar desafios 
 
 ---
 
+# Experiência Aplicada
+
+Embora o **QA Forge** seja um laboratório de estudos e experimentação, sua construção é fortemente influenciada pela minha atuação profissional em projetos reais de desenvolvimento de software, arquitetura de aplicações e garantia de qualidade.
+
+Ao longo da minha carreira, participei do desenvolvimento de soluções corporativas utilizando tecnologias como **Java (Spring Boot)**, **Node.js**, **Angular**, **React**, **Next.js**, **PostgreSQL**, **AWS** e **GitHub Actions**, sempre conciliando o desenvolvimento de software com práticas modernas de Engenharia de Qualidade.
+
+Essa experiência permitiu aplicar, na prática, conceitos que hoje fazem parte deste laboratório, tais como:
+
+| Experiência Profissional | Aplicação no QA Forge |
+|--------------------------|-----------------------|
+| Planejamento da estratégia de testes para microsserviços | Estrutura modular da suíte de testes |
+| Automação de APIs utilizando Postman e RestAssured | Implementação da camada de testes de API com Playwright |
+| Testes funcionais em aplicações Angular, React e Next.js | Arquitetura de testes End-to-End utilizando Page Objects |
+| Aplicação das recomendações do OWASP Top 10 | Implementação dos cenários de segurança e integração com OWASP ZAP |
+| Testes em PostgreSQL | Validação de regras de negócio e consistência de dados |
+| Arquitetura de microsserviços | Organização desacoplada do projeto |
+| CI/CD com GitHub Actions | Pipeline automatizado de validação da qualidade |
+| Secure Coding e análise estática (SAST) | Adoção de práticas de Security by Design e qualidade de código |
+
+O QA Forge representa a convergência entre minha formação acadêmica, minha experiência profissional e meu compromisso com a evolução contínua na área de Engenharia de Qualidade.
+
+Mais do que reproduzir exemplos encontrados em cursos, este laboratório busca transformar conhecimentos adquiridos em projetos reais em soluções práticas, reutilizáveis e alinhadas às boas práticas adotadas pela indústria de software.
+
 ## Objetivos
 
 O QA Forge foi desenvolvido com quatro objetivos principais:
@@ -107,29 +130,6 @@ Ao invés de apresentar apenas certificados ou conhecimento teórico, este repos
 
 Cada commit representa uma etapa da minha evolução como Engenheiro de Qualidade.
 ---
-
-# Experiência Aplicada
-
-Embora o **QA Forge** seja um laboratório de estudos e experimentação, sua construção é fortemente influenciada pela minha atuação profissional em projetos reais de desenvolvimento de software, arquitetura de aplicações e garantia de qualidade.
-
-Ao longo da minha carreira, participei do desenvolvimento de soluções corporativas utilizando tecnologias como **Java (Spring Boot)**, **Node.js**, **Angular**, **React**, **Next.js**, **PostgreSQL**, **AWS** e **GitHub Actions**, sempre conciliando o desenvolvimento de software com práticas modernas de Engenharia de Qualidade.
-
-Essa experiência permitiu aplicar, na prática, conceitos que hoje fazem parte deste laboratório, tais como:
-
-| Experiência Profissional | Aplicação no QA Forge |
-|--------------------------|-----------------------|
-| Planejamento da estratégia de testes para microsserviços | Estrutura modular da suíte de testes |
-| Automação de APIs utilizando Postman e RestAssured | Implementação da camada de testes de API com Playwright |
-| Testes funcionais em aplicações Angular, React e Next.js | Arquitetura de testes End-to-End utilizando Page Objects |
-| Aplicação das recomendações do OWASP Top 10 | Implementação dos cenários de segurança e integração com OWASP ZAP |
-| Testes em PostgreSQL | Validação de regras de negócio e consistência de dados |
-| Arquitetura de microsserviços | Organização desacoplada do projeto |
-| CI/CD com GitHub Actions | Pipeline automatizado de validação da qualidade |
-| Secure Coding e análise estática (SAST) | Adoção de práticas de Security by Design e qualidade de código |
-
-O QA Forge representa a convergência entre minha formação acadêmica, minha experiência profissional e meu compromisso com a evolução contínua na área de Engenharia de Qualidade.
-
-Mais do que reproduzir exemplos encontrados em cursos, este laboratório busca transformar conhecimentos adquiridos em projetos reais em soluções práticas, reutilizáveis e alinhadas às boas práticas adotadas pela indústria de software.
 
 # Estratégia de Testes
 
