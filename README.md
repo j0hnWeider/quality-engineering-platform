@@ -1,5 +1,36 @@
 <div align="center">
 
+<!-- Banner Pixel Art -->
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="auto" viewBox="0 0 900 250">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap');
+    .pixel-text {
+      font-family: 'Press Start 2P', monospace;
+      fill: white;
+      text-anchor: middle;
+      dominant-baseline: central;
+      paint-order: stroke fill;
+      stroke: #000000;
+      stroke-width: 6px;
+      stroke-linejoin: round;
+    }
+    .pixel-text-main {
+      font-size: 56px;
+    }
+    .pixel-text-sub {
+      font-size: 18px;
+    }
+  </style>
+  <image href="https://cdna.artstation.com/p/assets/images/images/021/720/920/original/pixel-jeff-mario.gif?1572709433" width="900" height="250" preserveAspectRatio="xMidYMid slice"/>
+  <rect width="900" height="250" fill="rgba(0,0,0,0.3)"/>
+  <text x="450" y="120" class="pixel-text pixel-text-main">QA FORGE</text>
+  <text x="450" y="185" class="pixel-text pixel-text-sub">LABORATÓRIO DE ENGENHARIA DE QUALIDADE</text>
+</svg>
+
+<br><br>
+
+<div align="center">
+
 # 🚀 QA Forge
 
 > **QA Forge** é o nome deste laboratório de Engenharia de Qualidade.
