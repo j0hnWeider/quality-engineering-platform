@@ -1,16 +1,46 @@
 <div align="center">
   <table>
     <tr>
-      <td align="center" style="padding: 0; border: none; background-image: url('imagens/pixel-jeff-mario.gif'); background-size: cover; background-position: center; width: 900px; height: 250px; border-radius: 12px;">
-        <div style="background: rgba(0,0,0,0.4); width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 12px;">
-          <h1 style="font-family: 'Press Start 2P', monospace; color: white; font-size: 56px; margin: 0; text-shadow: 4px 4px 0 #000;">QA FORGE</h1>
-          <p style="font-family: 'Press Start 2P', monospace; color: #d1d5db; font-size: 18px; margin: 10px 0 0 0; text-shadow: 2px 2px 0 #000;">LABORATÓRIO DE ENGENHARIA DE QUALIDADE</p>
+      <td align="center" style="
+        padding: 0;
+        border: none;
+        background-image: url('imagens/pixel-jeff-mario.gif');
+        background-size: cover;
+        background-position: center;
+        width: 900px;
+        height: 250px;
+        border-radius: 16px;
+      ">
+        <div style="
+          background: rgba(0,0,0,0.4);
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          border-radius: 16px;
+        ">
+          <h1 style="
+            font-family: 'Press Start 2P', monospace;
+            color: white;
+            font-size: 56px;
+            margin: 0;
+            text-shadow: 4px 4px 0 #000;
+          ">QA FORGE</h1>
+          <p style="
+            font-family: 'Press Start 2P', monospace;
+            color: #d1d5db;
+            font-size: 18px;
+            margin: 10px 0 0 0;
+            text-shadow: 2px 2px 0 #000;
+          ">LABORATÓRIO DE ENGENHARIA DE QUALIDADE</p>
         </div>
       </td>
     </tr>
   </table>
   <br><br>
-  <h1>🚀 QA Forge</h1>
+  
 </div>
 
 <div align="center">
