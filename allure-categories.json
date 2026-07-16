@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Testes de Segurança",
+    "matchedStatuses": ["passed"],
+    "messageRegex": ".*SEGURANÇA.*"
+  },
+  {
+    "name": "Testes de API - CRUD",
+    "matchedStatuses": ["passed", "failed"],
+    "traceRegex": ".*products-crud.*"
+  },
+  {
+    "name": "Testes de Contrato",
+    "matchedStatuses": ["passed"],
+    "messageRegex": ".*schema.*"
+  },
+  {
+    "name": "Falha de Autenticação",
+    "matchedStatuses": ["failed"],
+    "messageRegex": ".*401.*|.*403.*|.*login.*"
+  },
+  {
+    "name": "Testes de Injeção",
+    "matchedStatuses": ["passed", "failed"],
+    "traceRegex": ".*security-injection.*"
+  },
+  {
+    "name": "Testes de Interface (UI)",
+    "matchedStatuses": ["passed", "failed"],
+    "traceRegex": ".*ui/tests/.*"
+  }
+]

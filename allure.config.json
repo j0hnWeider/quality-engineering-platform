@@ -4,5 +4,8 @@
   },
   "report": {
     "path": "allure-report"
+  },
+  "categories": {
+    "path": "allure-categories.json"
   }
 }
