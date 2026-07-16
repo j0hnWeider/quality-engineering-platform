@@ -487,7 +487,8 @@ Execução automática da suíte de testes através do GitHub Actions.
 
 ![Relatório Allure](imagens/allure-report-passing.png)
 
-*Relatório interativo gerado com Allure Framework, disponível localmente após execução dos testes.*
+Relatório interativo gerado com Allure Framework, disponível localmente após execução dos testes.
+
 ---
 
 # Relatórios
