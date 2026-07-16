@@ -6,7 +6,7 @@
 >
 > O repositório permanece com o nome **quality-engineering-platform** por questões de versionamento, mas toda a documentação e evolução do projeto utilizam a identidade **QA Forge**.
 
-### Laboratório de Engenharia de Qualidade
+# Laboratório de Engenharia de Qualidade
 
 **API • Interface • Performance • Segurança • CI/CD**
 
@@ -79,7 +79,7 @@ O QA Forge representa a convergência entre minha formação acadêmica, minha e
 
 Mais do que reproduzir exemplos encontrados em cursos, este laboratório busca transformar conhecimentos adquiridos em projetos reais em soluções práticas, reutilizáveis e alinhadas às boas práticas adotadas pela indústria de software.
 
-## Objetivos
+# Objetivos
 
 O QA Forge foi desenvolvido com quatro objetivos principais:
 
@@ -90,7 +90,7 @@ O QA Forge foi desenvolvido com quatro objetivos principais:
 
 ---
 
-## Filosofia do Projeto
+# Filosofia do Projeto
 
 Este projeto é tratado como um laboratório permanente.
 
@@ -113,7 +113,7 @@ O objetivo não é apenas automatizar testes, mas compreender profundamente como
 
 ---
 
-## Formação aplicada ao projeto
+# Formação aplicada ao projeto
 
 Grande parte das decisões técnicas adotadas neste laboratório é fundamentada nos conhecimentos adquiridos durante minha formação acadêmica e continuamente aprimorada por meio de estudos e experimentação.
 
@@ -126,7 +126,7 @@ Essa combinação permite que o projeto evolua considerando não apenas aspectos
 
 ---
 
-## Sobre este repositório
+# Sobre este repositório
 
 Embora o QA Forge seja um ambiente de estudos, ele também representa minha forma de demonstrar, de maneira prática, como aplico conceitos de Engenharia de Software e Engenharia de Qualidade na resolução de problemas reais.
 
@@ -361,7 +361,7 @@ Entre seus principais diferenciais estão:
 
 # 🚀 Primeiros Passos
 
-## Pré-requisitos
+# Pré-requisitos
 
 Antes de executar o projeto, certifique-se de possuir os seguintes recursos instalados:
 
@@ -375,7 +375,7 @@ Antes de executar o projeto, certifique-se de possuir os seguintes recursos inst
 
 ---
 
-## Instalação
+# Instalação
 
 Clone o repositório oficial:
 
@@ -413,7 +413,7 @@ Caso necessário, ajuste as variáveis de ambiente conforme sua necessidade.
 
 # Execução
 
-## Comandos disponíveis
+# Comandos disponíveis
 
 | Comando | Descrição |
 |----------|-----------|
@@ -431,7 +431,7 @@ Caso necessário, ajuste as variáveis de ambiente conforme sua necessidade.
 
 As imagens abaixo representam a execução da suíte de testes e do pipeline no momento da elaboração desta documentação.
 
-## Visão Geral
+# Visão Geral
 
 Todos os cenários executados com sucesso.
 
@@ -439,7 +439,7 @@ Todos os cenários executados com sucesso.
 
 ---
 
-## Testes de API
+# Testes de API
 
 Validação dos cenários funcionais e de segurança da API.
 
@@ -447,7 +447,7 @@ Validação dos cenários funcionais e de segurança da API.
 
 ---
 
-## Testes de Interface
+# Testes de Interface
 
 Execução dos fluxos automatizados utilizando Playwright.
 
@@ -455,7 +455,7 @@ Execução dos fluxos automatizados utilizando Playwright.
 
 ---
 
-## Testes de Segurança
+# Testes de Segurança
 
 Execução dos cenários de autenticação, autorização e validações de segurança.
 
@@ -463,7 +463,7 @@ Execução dos cenários de autenticação, autorização e validações de segu
 
 ---
 
-## Scanner OWASP ZAP
+# Scanner OWASP ZAP
 
 Resultado da análise passiva de vulnerabilidades.
 
@@ -471,7 +471,7 @@ Resultado da análise passiva de vulnerabilidades.
 
 ---
 
-## Pipeline CI/CD
+# Pipeline CI/CD
 
 Execução automática da suíte de testes através do GitHub Actions.
 
@@ -494,7 +494,7 @@ Após a execução dos testes, são gerados relatórios que auxiliam na análise
 
 Toda alteração enviada para a branch principal é validada automaticamente por meio do **GitHub Actions**, garantindo que apenas mudanças compatíveis com os critérios de qualidade sejam integradas ao projeto.
 
-## Quality Gate
+# Quality Gate
 
 | Etapa | Objetivo |
 |--------|----------|
@@ -564,18 +564,18 @@ Consulte o arquivo `LICENSE` para mais informações.
 
 #  Autor
 
-## John Weider
+# John Weider
 
 Engenheiro de Qualidade em constante evolução, com experiência em desenvolvimento de software e interesse nas áreas de automação de testes, segurança de aplicações e integração contínua.
 
 O QA Forge representa minha jornada prática de aprendizado, reunindo experimentos, estudos e implementações voltadas à construção de soluções de qualidade utilizando ferramentas e práticas adotadas pelo mercado.
 
-### Formação Acadêmica
+# Formação Acadêmica
 
 - 🎓 Pós-graduação em Engenharia de Software
 - 🎓 Graduação em Defesa Cibernética
 
-### Áreas de Interesse
+# Áreas de Interesse
 
 - Engenharia de Qualidade
 - Automação de Testes
@@ -586,7 +586,7 @@ O QA Forge representa minha jornada prática de aprendizado, reunindo experiment
 - DevSecOps
 - Integração Contínua
 
-### Contato
+# Contato
 
 - 💼 **LinkedIn:** https://www.linkedin.com/in/john-weider-98bb041b2/
 - 📧 **E-mail:** zeus.programador@gmail.com
@@ -595,7 +595,7 @@ O QA Forge representa minha jornada prática de aprendizado, reunindo experiment
 
 <div align="center">
 
-### ⭐ Obrigado por visitar o QA Forge!
+# ⭐ Obrigado por visitar o QA Forge!
 
 Se este projeto foi útil ou despertou seu interesse, considere deixar uma ⭐ no repositório.
 
