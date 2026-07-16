@@ -2,6 +2,9 @@
  * Testes de CRUD completo para produtos
  * 
  * Objetivo: validar operações de criação, atualização e exclusão
+ * 
+ * Estratégia: cria uma conta administradora dinamicamente para garantir
+ * que as credenciais sejam válidas e a conta tenha permissões adequadas.
  */
 
 import { test, expect, APIRequestContext } from '@playwright/test';
@@ -15,7 +18,7 @@ let testPassword: string;
 
 test.describe('API - CRUD de Produtos', () => {
   test.beforeAll(async ({ playwright }) => {
-    // Cria uma conta administradora dinâmica
+    // Cria um contexto de API
     apiContext = await playwright.request.newContext({
       baseURL: process.env.API_BASE_URL || 'https://serverest.dev',
       extraHTTPHeaders: {
@@ -24,9 +27,11 @@ test.describe('API - CRUD de Produtos', () => {
       },
     });
 
-    testEmail = `qa_crud_${Date.now()}_${faker.string.alphanumeric(6)}@teste.com`;
+    // Gera credenciais únicas
+    testEmail = `qa_crud_${faker.string.alphanumeric(10)}@teste.com`;
     testPassword = '123456';
 
+    // Cria uma conta administradora via API
     const createUserResponse = await apiContext.post('/usuarios', {
       data: {
         nome: 'QA CRUD Teste',
@@ -37,12 +42,11 @@ test.describe('API - CRUD de Produtos', () => {
     });
 
     if (createUserResponse.status() !== 201) {
-      throw new Error(
-        `Falha ao criar conta: ${createUserResponse.status()} - ${await createUserResponse.text()}`
-      );
+      const errorBody = await createUserResponse.text();
+      throw new Error(`Falha ao criar conta: ${createUserResponse.status()} - ${errorBody}`);
     }
 
-    // Autentica com a conta criada
+    // Inicializa o cliente e faz login com a conta criada
     client = new ApiClient(apiContext, process.env.API_BASE_URL || 'https://serverest.dev');
     await client.login(testEmail, testPassword);
   });
@@ -105,23 +109,35 @@ test.describe('API - CRUD de Produtos', () => {
   test('API-08: Atualizar produto com sucesso', async () => {
     // 1. Cria um produto para atualizar
     const createResponse = await client.post('/produtos', {
-      nome: faker.commerce.productName(),
+      nome: faker.commerce.productName() + ' - ' + Date.now(),
       preco: 100,
       descricao: 'Produto para atualizar',
       quantidade: 5
     }, true);
+
+    if (createResponse.status() !== 201) {
+      const errorBody = await createResponse.text();
+      console.error('Erro ao criar produto:', createResponse.status(), errorBody);
+    }
     expect(createResponse.status()).toBe(201);
+
     const created = await createResponse.json();
     const productId = created._id;
 
     // 2. Atualiza o produto
     const updateResponse = await client.put(`/produtos/${productId}`, {
-      nome: 'Produto Atualizado',
+      nome: 'Produto Atualizado - ' + Date.now(),
       preco: 200,
       descricao: 'Descrição atualizada',
       quantidade: 10
     }, true);
+
+    if (updateResponse.status() !== 200) {
+      const errorBody = await updateResponse.text();
+      console.error('Erro ao atualizar produto:', updateResponse.status(), errorBody);
+    }
     expect(updateResponse.status()).toBe(200);
+
     const updated = await updateResponse.json();
     expect(updated.message).toContain('Registro alterado com sucesso');
   });
@@ -150,7 +166,13 @@ test.describe('API - CRUD de Produtos', () => {
       descricao: 'Produto para excluir',
       quantidade: 5
     }, true);
+
+    if (createResponse.status() !== 201) {
+      const errorBody = await createResponse.text();
+      console.error('Erro ao criar produto:', createResponse.status(), errorBody);
+    }
     expect(createResponse.status()).toBe(201);
+
     const created = await createResponse.json();
     const productId = created._id;
 
