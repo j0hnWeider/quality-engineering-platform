@@ -14,17 +14,11 @@
       stroke-width: 6px;
       stroke-linejoin: round;
     }
-    .pixel-text-main {
-      font-size: 56px;
-    }
-    .pixel-text-sub {
-      font-size: 18px;
-    }
   </style>
-  <image href="https://cdna.artstation.com/p/assets/images/images/021/720/920/original/pixel-jeff-mario.gif?1572709433" width="900" height="250" preserveAspectRatio="xMidYMid slice"/>
+  <image href="imagens/pixel-jeff-mario.gif" width="900" height="250" preserveAspectRatio="xMidYMid slice"/>
   <rect width="900" height="250" fill="rgba(0,0,0,0.3)"/>
-  <text x="450" y="120" class="pixel-text pixel-text-main">QA FORGE</text>
-  <text x="450" y="185" class="pixel-text pixel-text-sub">LABORATÓRIO DE ENGENHARIA DE QUALIDADE</text>
+  <text x="450" y="120" class="pixel-text" font-size="56">QA FORGE</text>
+  <text x="450" y="185" class="pixel-text" font-size="18">LABORATÓRIO DE ENGENHARIA DE QUALIDADE</text>
 </svg>
 
 <br><br>
