@@ -2,6 +2,10 @@
 
 # 🚀 QA Forge
 
+> **QA Forge** é o nome deste laboratório de Engenharia de Qualidade.
+>
+> O repositório permanece com o nome **quality-engineering-platform** por questões de versionamento, mas toda a documentação e evolução do projeto utilizam a identidade **QA Forge**.
+
 ### Laboratório de Engenharia de Qualidade
 
 **API • Interface • Performance • Segurança • CI/CD**
@@ -355,7 +359,7 @@ Entre seus principais diferenciais estão:
 - Padronização automática do código utilizando ESLint e Prettier.
 - Evolução contínua com foco em experimentação e aprendizado.
 
-#  Primeiros Passos
+# 🚀 Primeiros Passos
 
 ## Pré-requisitos
 
@@ -363,9 +367,9 @@ Antes de executar o projeto, certifique-se de possuir os seguintes recursos inst
 
 | Ferramenta | Versão Recomendada |
 |------------|-------------------|
-| Node.js | 18+ |
-| npm | 9+ |
-| Docker | Última versão |
+| Node.js | 18 ou superior |
+| npm | 9 ou superior |
+| Docker | Última versão estável |
 | Playwright | Navegadores instalados (`npx playwright install`) |
 | k6 | Para execução dos testes de performance |
 
@@ -373,16 +377,16 @@ Antes de executar o projeto, certifique-se de possuir os seguintes recursos inst
 
 ## Instalação
 
-Clone o repositório:
+Clone o repositório oficial:
 
 ```bash
-git clone https://github.com/j0hnWeider/qa-forge.git
+git clone https://github.com/j0hnWeider/quality-engineering-platform.git
 ```
 
 Acesse o diretório do projeto:
 
 ```bash
-cd qa-forge
+cd quality-engineering-platform
 ```
 
 Instale as dependências:
@@ -397,11 +401,13 @@ Instale os navegadores utilizados pelo Playwright:
 npx playwright install
 ```
 
-Caso necessário, copie o arquivo de variáveis de ambiente:
+Copie o arquivo de configuração de ambiente (opcional):
 
 ```bash
 cp .env.example .env
 ```
+
+Caso necessário, ajuste as variáveis de ambiente conforme sua necessidade.
 
 ---
 
