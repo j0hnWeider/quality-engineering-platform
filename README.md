@@ -12,13 +12,13 @@
 
 <p align="center">
 
-<img src="https://img.shields.io/github/actions/workflow/status/j0hnWeider/qa-forge/ci-quality-gate.yml?label=CI%2FCD&style=for-the-badge"/>
+<img src="https://img.shields.io/github/actions/workflow/status/j0hnWeider/quality-engineering-platform/ci-quality-gate.yml?branch=main&style=for-the-badge&label=CI%2FCD"/>
 
-<img src="https://img.shields.io/github/last-commit/j0hnWeider/qa-forge?style=for-the-badge"/>
+<img src="https://img.shields.io/github/last-commit/j0hnWeider/quality-engineering-platform?style=for-the-badge"/>
 
-<img src="https://img.shields.io/github/repo-size/j0hnWeider/qa-forge?style=for-the-badge"/>
+<img src="https://img.shields.io/github/repo-size/j0hnWeider/quality-engineering-platform?style=for-the-badge"/>
 
-<img src="https://img.shields.io/github/license/j0hnWeider/qa-forge?style=for-the-badge"/>
+<img src="https://img.shields.io/github/license/j0hnWeider/quality-engineering-platform?style=for-the-badge"/>
 
 </p>
 
