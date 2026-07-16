@@ -316,7 +316,7 @@ O QA Forge segue princípios de Engenharia de Software para tornar a suíte de t
 
 # Diferenciais do Projeto
 
-Embora o QA Forge seja um laboratório de estudos, sua arquitetura foi concebida para refletir práticas utilizadas em projetos reais de Engenharia de Qualidade.
+Embora seja um laboratório de estudos, sua arquitetura foi concebida para refletir práticas utilizadas em projetos reais de Engenharia de Qualidade.
 
 Entre seus principais diferenciais estão:
 
@@ -330,3 +330,132 @@ Entre seus principais diferenciais estão:
 - Monitoramento de cobertura de código.
 - Padronização automática do código utilizando ESLint e Prettier.
 - Evolução contínua com foco em experimentação e aprendizado.
+
+#  Primeiros Passos
+
+## Pré-requisitos
+
+Antes de executar o projeto, certifique-se de possuir os seguintes recursos instalados:
+
+| Ferramenta | Versão Recomendada |
+|------------|-------------------|
+| Node.js | 18+ |
+| npm | 9+ |
+| Docker | Última versão |
+| Playwright | Navegadores instalados (`npx playwright install`) |
+| k6 | Para execução dos testes de performance |
+
+---
+
+## Instalação
+
+Clone o repositório:
+
+```bash
+git clone https://github.com/j0hnWeider/qa-forge.git
+```
+
+Acesse o diretório do projeto:
+
+```bash
+cd qa-forge
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Instale os navegadores utilizados pelo Playwright:
+
+```bash
+npx playwright install
+```
+
+Caso necessário, copie o arquivo de variáveis de ambiente:
+
+```bash
+cp .env.example .env
+```
+
+---
+
+# Execução
+
+## Comandos disponíveis
+
+| Comando | Descrição |
+|----------|-----------|
+| `npm run test:all` | Executa toda a suíte de testes |
+| `npm run test:api` | Executa apenas os testes de API |
+| `npm run test:ui` | Executa apenas os testes de Interface |
+| `npm run test:perf` | Executa os testes de Performance (k6) |
+| `npm run test:zap` | Executa o scanner OWASP ZAP |
+| `npm run lint` | Analisa a qualidade do código |
+| `npm run format` | Formata o código com Prettier |
+
+---
+
+# Evidências
+
+As imagens abaixo representam a execução da suíte de testes e do pipeline no momento da elaboração desta documentação.
+
+## Visão Geral
+
+Todos os cenários executados com sucesso.
+
+![Todos os testes](imagens/all-tests-passing.png)
+
+---
+
+## Testes de API
+
+Validação dos cenários funcionais e de segurança da API.
+
+![API](imagens/api-tests-passing.png)
+
+---
+
+## Testes de Interface
+
+Execução dos fluxos automatizados utilizando Playwright.
+
+![UI](imagens/ui-tests-passing.png)
+
+---
+
+## Testes de Segurança
+
+Execução dos cenários de autenticação, autorização e validações de segurança.
+
+![Segurança](imagens/security-tests-passing.png)
+
+---
+
+## Scanner OWASP ZAP
+
+Resultado da análise passiva de vulnerabilidades.
+
+![OWASP ZAP](imagens/security-report-passing.png)
+
+---
+
+## Pipeline CI/CD
+
+Execução automática da suíte de testes através do GitHub Actions.
+
+![Pipeline](imagens/pipeline-passing.png)
+
+---
+
+# Relatórios
+
+Após a execução dos testes, são gerados relatórios que auxiliam na análise dos resultados.
+
+| Relatório | Localização |
+|-----------|-------------|
+| Playwright HTML Report | `playwright-report/index.html` |
+| Allure Results | `allure-results/` |
+| Test Results | `test-results/` |
+| OWASP ZAP Report | `reports/` |
