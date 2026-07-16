@@ -25,7 +25,6 @@ export class ApiClient {
     }
 
     const body = await response.json();
-    // O Serverest retorna o token no campo 'authorization'
     const token = body.authorization || body.token;
 
     if (!token) {

@@ -19,44 +19,61 @@ export interface AuthFixture {
 
 /**
  * Cria uma conta administradora via API e retorna um cliente autenticado
+ * com retry em caso de falha temporária da API.
  */
 export async function createAuthenticatedClient(): Promise<AuthFixture> {
-  // Cria um contexto de API
-  const apiContext = await request.newContext({
-    baseURL: process.env.API_BASE_URL || 'https://serverest.dev',
-    extraHTTPHeaders: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    },
-  });
+  const maxRetries = 3;
+  let lastError: Error | null = null;
 
-  // Gera credenciais únicas
-  const email = `qa_test_${faker.string.alphanumeric(10)}@teste.com`;
-  const password = '123456';
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      // Cria um contexto de API
+      const apiContext = await request.newContext({
+        baseURL: process.env.API_BASE_URL || 'https://serverest.dev',
+        extraHTTPHeaders: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
 
-  // Cria a conta administradora
-  const createResponse = await apiContext.post('/usuarios', {
-    data: {
-      nome: 'QA Teste',
-      email,
-      password,
-      administrador: 'true',
-    },
-  });
+      // Gera credenciais únicas
+      const email = `qa_test_${faker.string.alphanumeric(10)}@teste.com`;
+      const password = '123456';
 
-  if (createResponse.status() !== 201) {
-    const errorBody = await createResponse.text();
-    throw new Error(`Falha ao criar conta: ${createResponse.status()} - ${errorBody}`);
+      // Tenta criar a conta administradora
+      const createResponse = await apiContext.post('/usuarios', {
+        data: {
+          nome: 'QA Teste',
+          email,
+          password,
+          administrador: 'true',
+        },
+      });
+
+      if (createResponse.status() !== 201) {
+        const errorBody = await createResponse.text();
+        throw new Error(`Falha ao criar conta (${createResponse.status()}): ${errorBody}`);
+      }
+
+      // Inicializa o cliente e faz login
+      const client = new ApiClient(apiContext, process.env.API_BASE_URL || 'https://serverest.dev');
+      await client.login(email, password);
+
+      return {
+        client,
+        email,
+        password,
+        apiContext,
+      };
+    } catch (error: any) {
+      lastError = error;
+      console.warn(`Tentativa ${attempt} de ${maxRetries} falhou: ${error.message}`);
+      if (attempt < maxRetries) {
+        // Aguarda 1 segundo antes de tentar novamente
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      }
+    }
   }
 
-  // Inicializa o cliente e faz login
-  const client = new ApiClient(apiContext, process.env.API_BASE_URL || 'https://serverest.dev');
-  await client.login(email, password);
-
-  return {
-    client,
-    email,
-    password,
-    apiContext,
-  };
+  throw new Error(`Falha ao criar cliente autenticado após ${maxRetries} tentativas: ${lastError?.message}`);
 }

@@ -87,8 +87,6 @@ test.describe('Testes de segurança - Injeção', () => {
           expect(body.nome).not.toContain('<body');
           expect(body.nome).not.toContain('<iframe');
         }
-        // Se o campo 'nome' não existir, apenas valida que a criação foi bem-sucedida
-        // (status 201 já é suficiente para confirmar que a API aceitou o payload)
       } else {
         expect(REJECTION_STATUSES).toContain(response.status());
       }
