@@ -417,12 +417,17 @@ Caso necessário, ajuste as variáveis de ambiente conforme sua necessidade.
 
 | Comando | Descrição |
 |----------|-----------|
-| `npm run test:all` | Executa toda a suíte de testes |
+| `npm run test:all` | Executa toda a suíte de testes (API + UI) |
 | `npm run test:api` | Executa apenas os testes de API |
 | `npm run test:ui` | Executa apenas os testes de Interface |
 | `npm run test:perf` | Executa os testes de Performance (k6) |
-| `npm run test:security` | Executa o scanner OWASP ZAP |
-| `npm run lint` | Analisa a qualidade do código |
+| `npm run test:security` | Executa os testes de segurança ativos (injeção, auth, headers) |
+| `npm run test:zap` | Executa o scanner passivo OWASP ZAP |
+| `npm run report:allure` | Gera e abre o relatório Allure interativo |
+| `npm run report:allure:serve` | Serve o relatório Allure localmente |
+| `npm run coverage` | Gera relatório de cobertura de código (NYC) |
+| `npm run lint` | Analisa a qualidade do código com ESLint |
+| `npm run lint:fix` | Corrige automaticamente problemas de lint |
 | `npm run format` | Formata o código com Prettier |
 
 ---
@@ -477,6 +482,12 @@ Execução automática da suíte de testes através do GitHub Actions.
 
 ![Pipeline](imagens/pipeline-passing.png)
 
+
+# Relatório Allure
+
+![Relatório Allure com todos os testes passando](imagens/allure-report-passing.png)
+
+*Relatório interativo gerado com Allure Framework, disponível localmente após execução dos testes.*
 ---
 
 # Relatórios
