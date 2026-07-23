@@ -78,8 +78,3 @@ A estratégia de testes combina validações funcionais e não funcionais, distr
 | Code Coverage | Cobertura de código | NYC | OK |
 | Code Quality | Padronização | ESLint + Prettier | OK |
 
----
-
-git add README.md
-git commit -m "fix: corrige formatação do README e remove marcadores de conflito"
-git push origin main
