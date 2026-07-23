@@ -102,7 +102,7 @@ Resultados da execução completa da suíte de testes.
 
 | Testes de Contrato | Relatório Allure |
 |-------------------|------------------|
-| ![Contrato](imagens/contract-tests-passing.png) | ![Allure](imagens/allure-report-passing.png) |
+| ![Contrato](imagens/allure-contract-tests.png) | ![Allure](imagens/allure-report-passing.png) |
 
 ---
 
