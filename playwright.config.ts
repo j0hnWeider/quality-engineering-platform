@@ -48,5 +48,17 @@ export default defineConfig({
         baseURL: process.env.UI_BASE_URL || 'https://www.saucedemo.com',
       },
     },
+    {
+      name: 'contract',
+      testMatch: /contract\/.*\.spec\.ts/,
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: process.env.API_BASE_URL || 'https://serverest.dev',
+        extraHTTPHeaders: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    },
   ],
 });

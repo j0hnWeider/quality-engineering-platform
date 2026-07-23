@@ -16,6 +16,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+
+      - name: Setup Java (for Allure)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
           
       - name: Install dependencies
         run: npm ci
@@ -35,10 +41,18 @@ jobs:
         env:
           API_BASE_URL: https://serverest.dev
 
+      - name: Run Contract Tests (Consumer)
+        run: npm run test:contract:consumer
+        env:
+          API_BASE_URL: https://serverest.dev
+
       - name: Run UI Tests
         run: npm run test:ui
         env:
           UI_BASE_URL: https://www.saucedemo.com
+
+      - name: Run Security Tests (Active)
+        run: npm run test:security
 
       - name: Performance Smoke Test (k6)
         run: npm run test:perf
@@ -48,6 +62,17 @@ jobs:
           chmod +x src/security/zap-baseline-scan.sh
           mkdir -p reports
           sudo ./src/security/zap-baseline-scan.sh
+
+      - name: Generate Allure Report
+        if: always()
+        run: npx allure generate allure-results --clean -o allure-report
+
+      - name: Upload Allure Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report/
 
       - name: Upload Test Artifacts (Playwright Report)
         if: always()

@@ -18,6 +18,10 @@ allure-report/
 reports/coverage/
 reports/mutation/
 
+# Pact contract tests - ignore generated pact files but keep the directory
+src/contract/pacts/*.json
+!src/contract/pacts/.gitkeep
+
 # Logs
 *.log
 npm-debug.log*
