@@ -11,6 +11,13 @@ export class ApiClient {
   }
 
   /**
+   * Define o token de autenticação manualmente (para uso em testes)
+   */
+  setToken(token: string): void {
+    this.token = token;
+  }
+
+  /**
    * Realiza login e armazena o token de autenticação
    * @throws Error se o login falhar ou não retornar token
    */

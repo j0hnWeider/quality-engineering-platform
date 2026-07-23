@@ -28,7 +28,6 @@ test.describe('Contrato (Consumer) - Produtos', () => {
   const pact = createPact({ consumer: CONSUMER_NAME, provider: PROVIDER_NAME });
 
   test.beforeAll(async () => {
-    // Cria um contexto da API do Playwright para usar com o mock
     apiContext = await request.newContext();
   });
 
@@ -86,7 +85,6 @@ test.describe('Contrato (Consumer) - Produtos', () => {
         expect(Array.isArray(body.produtos)).toBeTruthy();
         expect(body.produtos.length).toBeGreaterThanOrEqual(1);
 
-        // Valida estrutura de cada produto
         for (const produto of body.produtos) {
           expect(produto).toHaveProperty('nome');
           expect(produto).toHaveProperty('preco');
@@ -135,7 +133,12 @@ test.describe('Contrato (Consumer) - Produtos', () => {
       .uponReceiving('uma requisição para criar um produto')
       .withRequest('POST', '/produtos', (builder) => {
         builder
-          .jsonBody(novoProduto)
+          .jsonBody({
+            nome: MatchersV3.like(novoProduto.nome),
+            preco: MatchersV3.like(novoProduto.preco),
+            descricao: MatchersV3.like(novoProduto.descricao),
+            quantidade: MatchersV3.like(novoProduto.quantidade),
+          })
           .headers({
             'Authorization': MatchersV3.like('Bearer token123'),
             'Content-Type': 'application/json',
@@ -156,12 +159,9 @@ test.describe('Contrato (Consumer) - Produtos', () => {
       })
       .executeTest(async (mockServer) => {
         mockClient = new ApiClient(apiContext, mockServer.url);
+        mockClient.setToken('Bearer token123'); // CORREÇÃO: define token manualmente
 
-        const response = await mockClient.post(
-          '/produtos',
-          novoProduto,
-          true
-        );
+        const response = await mockClient.post('/produtos', novoProduto, true);
         expect(response.status()).toBe(201);
 
         const body = await response.json();
@@ -261,7 +261,12 @@ test.describe('Contrato (Consumer) - Produtos', () => {
       .uponReceiving('uma requisição para atualizar um produto')
       .withRequest('PUT', `/produtos/${productId}`, (builder) => {
         builder
-          .jsonBody(dadosAtualizados)
+          .jsonBody({
+            nome: MatchersV3.like(dadosAtualizados.nome),
+            preco: MatchersV3.like(dadosAtualizados.preco),
+            descricao: MatchersV3.like(dadosAtualizados.descricao),
+            quantidade: MatchersV3.like(dadosAtualizados.quantidade),
+          })
           .headers({
             'Authorization': MatchersV3.like('Bearer token123'),
             'Content-Type': 'application/json',
@@ -281,6 +286,7 @@ test.describe('Contrato (Consumer) - Produtos', () => {
       })
       .executeTest(async (mockServer) => {
         mockClient = new ApiClient(apiContext, mockServer.url);
+        mockClient.setToken('Bearer token123'); // CORREÇÃO: define token manualmente
 
         const response = await mockClient.put(
           `/produtos/${productId}`,
@@ -337,6 +343,7 @@ test.describe('Contrato (Consumer) - Produtos', () => {
       })
       .executeTest(async (mockServer) => {
         mockClient = new ApiClient(apiContext, mockServer.url);
+        mockClient.setToken('Bearer token123'); // CORREÇÃO: define token manualmente
 
         const response = await mockClient.delete(
           `/produtos/${productId}`,
@@ -355,4 +362,3 @@ test.describe('Contrato (Consumer) - Produtos', () => {
       });
   });
 });
-
